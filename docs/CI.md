@@ -39,3 +39,5 @@ The job uses `contents: read` and `deployments: write`; the latter allows GitHub
 The metadata is a public consistency check, not AWS-signed provenance. A failed Amplify build leaves the old commit online; the reporter then fails after its bounded wait. Check the Amplify build log for the underlying reason.
 
 GitHub CodeQL default setup scans supported languages weekly and on configured repository events. Dependabot security updates are enabled in addition to the weekly version-update configuration. No automated tool guarantees the absence of application vulnerabilities.
+
+Production records are created explicitly with the deployment API’s `production_environment: true`. The job uses the main-only environment with automatic record creation disabled. It records `in_progress` before public verification, then reports success only when the verification and current-main checks succeed; failure or cancellation reports failure. This avoids relying on GitHub’s automatic environment classification.
