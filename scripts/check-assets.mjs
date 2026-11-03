@@ -8,7 +8,10 @@ async function walk(directory) {
 }
 const sources = ['index.html', ...(await walk('src')).filter((file) => /\.(jsx?|css)$/.test(file))];
 const text = (await Promise.all(sources.map((file) => readFile(file, 'utf8')))).join('\n');
-const referenced = new Set([...text.matchAll(/\/static\/[^\s'"`<>\)]+/g)].map((match) => match[0]));
+const referenced = new Set(
+  [...text.matchAll(/\/(?:static\/[^\s'"`<>\)]+|favicon\.ico(?:[?#][^\s'"`<>\)]+)?)/g)]
+    .map((match) => match[0].split(/[?#]/, 1)[0]),
+);
 for (const url of referenced) assert.ok((await stat(`public${url}`)).isFile(), `Missing active asset: ${url}`);
 const publicFiles = await walk('public');
 for (const file of publicFiles) {
