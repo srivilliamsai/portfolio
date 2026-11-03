@@ -10,7 +10,7 @@ async function markdownFiles(directory) {
     return entry.isDirectory() ? markdownFiles(file) : entry.name.endsWith('.md') ? [file] : [];
   }))).flat();
 }
-const files = ['README.md', 'DEPLOYMENT.md', 'CONTRIBUTING.md', ...(await markdownFiles('docs'))];
+const files = ['README.md', 'DEPLOYMENT.md', 'SECURITY.md', ...(await markdownFiles('docs'))];
 let checked = 0;
 for (const file of files) {
   const content = await readFile(file, 'utf8');

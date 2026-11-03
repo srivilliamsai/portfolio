@@ -2,7 +2,7 @@
 
 [![Portfolio CI](https://github.com/srivilliamsai/portfolio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/srivilliamsai/portfolio/actions/workflows/ci.yml)
 
-A personal portfolio connecting Java backend thinking, React interfaces and native iOS work. Visitors can browse projects, skills, open-source contributions and nine articles, or explore the same story through an interactive developer terminal.
+My personal developer portfolio, shared for participation in the AWS Student Builder Challenge. It connects Java backend thinking, React interfaces and native iOS work. Visitors can browse projects, skills, open-source contributions and nine articles, or explore the same story through an interactive developer terminal.
 
 The portfolio is a static React/Vite application hosted on AWS Amplify. Its terminal answers portfolio questions using local code and project data; it does not call an AI service.
 
@@ -70,7 +70,7 @@ This runs the included unit tests, asset validation, local documentation links, 
 
 ## GitHub workflows
 
-[Portfolio CI](.github/workflows/ci.yml) verifies Node 22 on Linux, macOS and Windows, saving JUnit/TAP reports and a build for inspection. [Dependency audit](.github/workflows/dependency-audit.yml) checks locked packages; [Dependabot](.github/dependabot.yml) proposes weekly package/action updates. Amplify builds connected pushes. The Production job reports success only after it verifies the published commit and file hashes. See the [CI guide](docs/CI.md) and [contribution guide](CONTRIBUTING.md).
+[Portfolio CI](.github/workflows/ci.yml) verifies Node 22 on Linux, macOS and Windows, saving JUnit/TAP reports and a build for inspection. [Dependency audit](.github/workflows/dependency-audit.yml) checks locked packages; [Dependabot](.github/dependabot.yml) proposes weekly package/action updates. Amplify builds connected pushes. The Production job reports success only after it verifies the published commit and file hashes. See the [CI guide](docs/CI.md).
 
 ## AWS implementation
 
