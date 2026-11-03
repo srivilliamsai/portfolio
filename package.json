@@ -17,7 +17,7 @@
     "verify:ci": "npm run test:ci && npm run check:assets && npm run check:docs && npm run build && npm run check:dist"
   },
   "dependencies": {
-    "framer-motion": "^13.1.1",
+    "framer-motion": "^14.9.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0"
