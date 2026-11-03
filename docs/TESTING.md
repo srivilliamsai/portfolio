@@ -43,11 +43,11 @@ A fresh npm registry audit initially identified two high-severity build-tool dep
 
 ## Browser product evidence
 
-The screenshots linked below are from an isolated local production preview of the AWS project's matching source. They show the product and discovery path; they are **not AWS deployment evidence**. The browser observations in `verification.json` describe the specific interactions executed. They do not certify every page, browser, physical device or accessibility technology.
+The desktop screenshot below was supplied by the owner on 3 November 2026. The mobile and terminal screenshots are from the earlier isolated local production preview of the AWS project's matching source. They show the product and discovery path; they are **not AWS deployment evidence**. The browser observations in `verification.json` describe the specific interactions executed. They do not certify every page, browser, physical device or accessibility technology.
 
 | View | Screenshot |
 |---|---|
-| Desktop homepage | [Local desktop](screenshots/local-desktop.png) |
+| Desktop homepage | [Owner-provided desktop](screenshots/portfolio-desktop.png) |
 | Mobile menu with the Terminal option | [Local mobile menu](screenshots/local-mobile-menu.png) |
 | Personal story interaction | [Local terminal story](screenshots/local-terminal-story.png) |
 | Glassora project and pricing follow-up | [Local terminal follow-up](screenshots/local-terminal-followup.png) |

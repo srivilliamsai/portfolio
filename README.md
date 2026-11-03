@@ -6,9 +6,9 @@ A personal portfolio connecting Java backend thinking, React interfaces and nati
 
 The portfolio is a static React/Vite application prepared for AWS Amplify Hosting. Its terminal answers portfolio questions using local code and project data; it does not call an AI service.
 
-![Desktop portfolio homepage from a local production preview](docs/screenshots/local-desktop.png)
+![Desktop portfolio homepage supplied by the owner](docs/screenshots/portfolio-desktop.png)
 
-*Product preview captured locally. Public AWS deployment evidence is still pending.*
+*Desktop screenshot supplied by the owner on 3 November 2026. Public AWS deployment evidence is still pending.*
 
 ## Review status
 

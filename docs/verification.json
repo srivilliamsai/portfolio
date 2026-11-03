@@ -111,8 +111,13 @@
     ],
     "screenshots": [
       {
-        "file": "docs/screenshots/local-desktop.png",
-        "sha256": "7a068025f1c6115b7d040b4fff30c4e56ea0a068df6bd4684712b2d47e0ed04f"
+        "file": "docs/screenshots/portfolio-desktop.png",
+        "sha256": "fc0ceb62ac16f7315991f397eac2a5f2d56f93769ba8b140ceef74c3ddeff087",
+        "source": "Owner-provided screenshot",
+        "originalFilename": "Screenshot 2026-11-03 at 1.18.02\u202fPM.png",
+        "width": 2880,
+        "height": 1564,
+        "hostingEvidence": false
       },
       {
         "file": "docs/screenshots/local-mobile-menu.png",
@@ -126,7 +131,8 @@
         "file": "docs/screenshots/local-terminal-followup.png",
         "sha256": "8aab47a083c310f6717bcc19eb37da9822c90503d7a5ef0c1927fb7315d1eaa4"
       }
-    ]
+    ],
+    "screenshotNote": "The desktop image was replaced with the owner-provided screenshot. Earlier browser observations retain their original local production-preview scope; they are not a new automated review of the supplied capture."
   },
   "evaluation": {
     "officialCategoryWeights": {
@@ -350,7 +356,17 @@
         }
       ]
     },
-    "linkCheck": "npm run check:docs checks local file/image/directory targets; external URLs and anchor IDs are excluded"
+    "linkCheck": "npm run check:docs checks local file/image/directory targets; external URLs and anchor IDs are excluded",
+    "desktopScreenshotUpdate": {
+      "checkedAt": "2026-11-03T07:51:40.392037+00:00",
+      "sourceFilename": "Screenshot 2026-11-03 at 1.18.02\u202fPM.png",
+      "currentFile": "docs/screenshots/portfolio-desktop.png",
+      "removedFile": "docs/screenshots/local-desktop.png",
+      "sha256": "fc0ceb62ac16f7315991f397eac2a5f2d56f93769ba8b140ceef74c3ddeff087",
+      "width": 2880,
+      "height": 1564,
+      "scope": "README image, testing-document link and screenshot record only. Existing layout-review records describe their earlier document revision."
+    }
   },
   "repository": {
     "url": "https://github.com/srivilliamsai/portfolio",
