@@ -15,7 +15,7 @@ The portfolio is a static React/Vite application hosted on AWS Amplify. Its term
 | Item | Current status |
 |---|---|
 | Application | Implemented; 1,832 tests and production build passed, 3 November 2026 |
-| Public AWS URL | Pending owner deployment |
+| Public AWS URL | [Live portfolio](https://main.d229cwpntq8yz1.amplifyapp.com) |
 | Source URL | [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio) |
 | AWS evidence | [Live AWS site](https://main.d229cwpntq8yz1.amplifyapp.com); commit and file verification reported through the Production environment |
 | Originality | Previously public portfolio; organizer confirmation required |
