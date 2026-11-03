@@ -1,0 +1,376 @@
+{
+  "commit": "2af73d700bc5babfd5ee369ba205182affe30077",
+  "origin": "https://main.d229cwpntq8yz1.amplifyapp.com",
+  "checks": [
+    {
+      "hash": "#projects",
+      "label": "Projects",
+      "scenario": "WEB-01",
+      "sectionPresent": true,
+      "terminalClosed": true
+    },
+    {
+      "hash": "#skills",
+      "label": "Skills",
+      "scenario": "WEB-01",
+      "sectionPresent": true,
+      "terminalClosed": true
+    },
+    {
+      "hash": "#about-me",
+      "label": "About me",
+      "scenario": "WEB-01",
+      "sectionPresent": true,
+      "terminalClosed": true
+    },
+    {
+      "expectedPath": "/pitstop",
+      "heading": "PitStop",
+      "label": "PitStop",
+      "overflow": false,
+      "path": "/pitstop",
+      "scenario": "WEB-02",
+      "viewport": "desktop"
+    },
+    {
+      "expectedPath": "/carbon-footprint",
+      "heading": "Carbon Personal Footprint App",
+      "label": "Carbon Footprint",
+      "overflow": false,
+      "path": "/carbon-footprint",
+      "scenario": "WEB-02",
+      "viewport": "desktop"
+    },
+    {
+      "expectedPath": "/glassora",
+      "heading": "Glassora",
+      "label": "Glassora",
+      "overflow": false,
+      "path": "/glassora",
+      "scenario": "WEB-02",
+      "viewport": "desktop"
+    },
+    {
+      "scenario": "NAV-01",
+      "label": "Projects",
+      "closedAfterSelection": true,
+      "hash": "#projects"
+    },
+    {
+      "scenario": "NAV-01",
+      "label": "Skills",
+      "closedAfterSelection": true,
+      "hash": "#skills"
+    },
+    {
+      "scenario": "NAV-01",
+      "label": "About me",
+      "closedAfterSelection": true,
+      "hash": "#about-me"
+    },
+    {
+      "expectedPath": "/pitstop",
+      "heading": "PitStop",
+      "label": "PitStop",
+      "overflow": false,
+      "path": "/pitstop",
+      "scenario": "WEB-02",
+      "viewport": "390x720"
+    },
+    {
+      "expectedPath": "/carbon-footprint",
+      "heading": "Carbon Personal Footprint App",
+      "label": "Carbon Footprint",
+      "overflow": false,
+      "path": "/carbon-footprint",
+      "scenario": "WEB-02",
+      "viewport": "390x720"
+    },
+    {
+      "expectedPath": "/glassora",
+      "heading": "Glassora",
+      "label": "Glassora",
+      "overflow": false,
+      "path": "/glassora",
+      "scenario": "WEB-02",
+      "viewport": "390x720"
+    },
+    {
+      "scenario": "NAV-01",
+      "terminalOpenedFromMobileMenu": true
+    },
+    {
+      "scenario": "TERM-01",
+      "command": "story",
+      "output": "srivilliamsai@dev\n:\n~\n$\nstory\n\nI learn by building. Java lets me explore how software works behind the scenes; SwiftUI lets me explore how it feels to use.\n\nCarbon Footprint explores Java and React together. Wyndra and Glassora explore native SwiftUI interfaces. These are separate applications: the iOS projects do not use Carbon Footprint’s Java backend.\n\nThis portfolio follows the same practical approach: its terminal works locally, with no AI account or network request. Try “projects”, “arch” or “oss” for the details."
+    },
+    {
+      "scenario": "TERM-02",
+      "command": "porjects",
+      "output": "srivilliamsai@dev\n:\n~\n$\nporjects\n\nCorrected to “projects”.\n\nPitStop · Web interface concept\nA roadside assistance concept for finding fuel stations, comparing services, and requesting help.\nReact / Vite / Leaflet\n\nCarbon Footprint · Learning project · demo available\nA sustainability project that helps people understand and track their personal carbon footprint.\nJava / Spring Boot / React\nSource: https://github.com/srivilliamsai/CarbonPersonalFootprintApp\nFrontend demo: https://srivilliamsai.github.io/CarbonPersonalFootprintApp/\n\nWyndra · iOS project\nAn Apple Weather-inspired native iOS weather app with detailed forecasts and dynamic interfaces.\nSwift / SwiftUI / OpenWeather\n\nGlassora · App Store listing available\nA native iOS wallpaper app for discovering and saving high-resolution backgrounds.\nSwiftUI / Firebase / Cloudflare R2\nApp Store: https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126"
+    },
+    {
+      "scenario": "TERM-02",
+      "command": "flibberty",
+      "output": "srivilliamsai@dev\n:\n~\n$\nflibberty\n\nI couldn’t match that portfolio question or command. Try “help”, “skills”, “projects”, or “contact”. You can also ask “What did you build in Carbon Footprint?”."
+    },
+    {
+      "scenario": "TERM-03",
+      "command": "glassora",
+      "output": "srivilliamsai@dev\n:\n~\n$\nglassora\n\nGlassora · App Store listing available\nA native iOS wallpaper app for discovering and saving high-resolution backgrounds.\n\nMy contribution: Built the SwiftUI browsing experience with asynchronous image loading and cloud-backed content.\nTechnology: SwiftUI / Firebase / Cloudflare R2\n\nA native SwiftUI wallpaper application with Firebase and Cloudflare R2-backed content. This case study shows the browsing interface; the App Store link is the destination for the app. Its content services are separate from the other projects.\nCase study: /glassora"
+    },
+    {
+      "scenario": "TERM-03",
+      "command": "its free",
+      "output": "srivilliamsai@dev\n:\n~\n$\nits free\n\nGlassora is listed as Free to download on the India App Store (checked 2026-11-03). Check the listing for the latest regional pricing and any purchase terms.\nApp Store: https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126"
+    },
+    {
+      "scenario": "TERM-04",
+      "command": "wyndra",
+      "output": "srivilliamsai@dev\n:\n~\n$\nwyndra\n\nWyndra · iOS project\nAn Apple Weather-inspired native iOS weather app with detailed forecasts and dynamic interfaces.\n\nMy contribution: Built the SwiftUI screens and weather-data experience, from conditions to detailed metrics.\nTechnology: Swift / SwiftUI / OpenWeather\n\nA native SwiftUI weather project using OpenWeather data. The images are an app walkthrough, and the metric preview below cycles through screenshots. It is independent of the Carbon Footprint Java backend.\nCase study: /wyndra"
+    },
+    {
+      "scenario": "TERM-04",
+      "command": "its free",
+      "output": "srivilliamsai@dev\n:\n~\n$\nits free\n\nPricing for Wyndra is not recorded in this portfolio, so I can’t confirm whether it is free or paid.\nCase study: /wyndra"
+    },
+    {
+      "scenario": "TERM-05",
+      "command": "skills",
+      "output": "srivilliamsai@dev\n:\n~\n$\nskills\n\nBackend: Java, Spring Boot, REST APIs, SQL\nWeb: React, JavaScript, HTML & CSS, Vite\niOS: Swift, SwiftUI, Async image loading, Native UI\nCloud & tools: Firebase, Cloudflare R2, Git, Postman"
+    },
+    {
+      "scenario": "TERM-05",
+      "command": "its free",
+      "output": "srivilliamsai@dev\n:\n~\n$\nits free\n\nWhich project do you mean: PitStop, Carbon Footprint, Wyndra, Glassora? Name one first, then ask a follow-up such as “Is it free?”"
+    },
+    {
+      "scenario": "TERM-05",
+      "command": "glassora",
+      "output": "srivilliamsai@dev\n:\n~\n$\nglassora\n\nGlassora · App Store listing available\nA native iOS wallpaper app for discovering and saving high-resolution backgrounds.\n\nMy contribution: Built the SwiftUI browsing experience with asynchronous image loading and cloud-backed content.\nTechnology: SwiftUI / Firebase / Cloudflare R2\n\nA native SwiftUI wallpaper application with Firebase and Cloudflare R2-backed content. This case study shows the browsing interface; the App Store link is the destination for the app. Its content services are separate from the other projects.\nCase study: /glassora"
+    },
+    {
+      "scenario": "TERM-05",
+      "action": "clear",
+      "outputEntries": 0
+    },
+    {
+      "scenario": "TERM-05",
+      "command": "its free",
+      "output": "srivilliamsai@dev\n:\n~\n$\nits free\n\nWhich project do you mean: PitStop, Carbon Footprint, Wyndra, Glassora? Name one first, then ask a follow-up such as “Is it free?”"
+    },
+    {
+      "scenario": "TERM-05",
+      "command": "its free",
+      "output": "srivilliamsai@dev\n:\n~\n$\nits free\n\nWhich project do you mean: PitStop, Carbon Footprint, Wyndra, Glassora? Name one first, then ask a follow-up such as “Is it free?”"
+    },
+    {
+      "action": "Tab completion",
+      "focus": "dev-terminal-input",
+      "input": "projects",
+      "scenario": "KEY-01"
+    },
+    {
+      "action": "ArrowUp",
+      "input": "projects",
+      "scenario": "KEY-01"
+    },
+    {
+      "action": "ArrowDown restores draft",
+      "input": "unfinished draft",
+      "scenario": "KEY-01"
+    },
+    {
+      "action": "Shift+Tab wraps first to last",
+      "focusTag": "SUMMARY",
+      "focusText": "Keyboard shortcuts",
+      "scenario": "KEY-01"
+    },
+    {
+      "action": "Tab wraps last to first",
+      "focus": "Close terminal",
+      "scenario": "KEY-01"
+    },
+    {
+      "action": "Escape closes and returns focus",
+      "closed": true,
+      "focus": "Open Developer Terminal",
+      "scenario": "KEY-01"
+    },
+    {
+      "scenario": "TERM-02",
+      "command": "hell",
+      "output": "srivilliamsai@dev\n:\n~\n$\nhell\n\nDid you mean “hello” or “help”?\nI couldn’t match that portfolio question or command. Try “help”, “skills”, “projects”, or “contact”. You can also ask “What did you build in Carbon Footprint?”."
+    }
+  ],
+  "externalLinks": [
+    "https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126",
+    "https://github.com/Workday/WorkdayDeveloperProgram/pull/14",
+    "https://github.com/Workday/WorkdayDeveloperProgram/pull/16",
+    "https://github.com/Workday/WorkdayDeveloperProgram/pull/17",
+    "https://github.com/Workday/WorkdayDeveloperProgram/pull/22",
+    "https://github.com/Workday/WorkdayDeveloperProgram/pull/5",
+    "https://github.com/srivilliamsai",
+    "https://github.com/srivilliamsai/CarbonPersonalFootprintApp",
+    "https://github.com/srivilliamsai/pitstop",
+    "https://glassora.vercel.app/",
+    "https://main.d229cwpntq8yz1.amplifyapp.com/static/media/resume.pdf",
+    "https://srivilliamsai.github.io/CarbonPersonalFootprintApp/",
+    "https://www.credly.com/users/srivilliamsai",
+    "https://www.instagram.com/sriwilliamsai",
+    "https://www.linkedin.com/in/srivilliamsai/",
+    "https://x.com/srivilliamsai",
+    "mailto:srivilliamsai@gmail.com",
+    "tel:+917339312067"
+  ],
+  "browserConsoleErrors": [],
+  "checkedAt": "2026-11-03T11:02:28.184Z",
+  "linkChecks": [
+    {
+      "url": "https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126",
+      "status": 200,
+      "finalUrl": "https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126",
+      "contentType": "text/html",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/Workday/WorkdayDeveloperProgram/pull/14",
+      "status": 200,
+      "finalUrl": "https://github.com/Workday/WorkdayDeveloperProgram/pull/14",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/Workday/WorkdayDeveloperProgram/pull/16",
+      "status": 200,
+      "finalUrl": "https://github.com/Workday/WorkdayDeveloperProgram/pull/16",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/Workday/WorkdayDeveloperProgram/pull/17",
+      "status": 200,
+      "finalUrl": "https://github.com/Workday/WorkdayDeveloperProgram/pull/17",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/Workday/WorkdayDeveloperProgram/pull/22",
+      "status": 200,
+      "finalUrl": "https://github.com/Workday/WorkdayDeveloperProgram/pull/22",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/Workday/WorkdayDeveloperProgram/pull/5",
+      "status": 200,
+      "finalUrl": "https://github.com/Workday/WorkdayDeveloperProgram/pull/5",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/srivilliamsai",
+      "status": 200,
+      "finalUrl": "https://github.com/srivilliamsai",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/srivilliamsai/CarbonPersonalFootprintApp",
+      "status": 200,
+      "finalUrl": "https://github.com/srivilliamsai/CarbonPersonalFootprintApp",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://github.com/srivilliamsai/pitstop",
+      "status": 200,
+      "finalUrl": "https://github.com/srivilliamsai/pitstop",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://glassora.vercel.app/",
+      "status": 200,
+      "finalUrl": "https://glassora.vercel.app/",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://main.d229cwpntq8yz1.amplifyapp.com/static/media/resume.pdf",
+      "status": 200,
+      "finalUrl": "https://main.d229cwpntq8yz1.amplifyapp.com/static/media/resume.pdf",
+      "contentType": "application/pdf",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://srivilliamsai.github.io/CarbonPersonalFootprintApp/",
+      "status": 200,
+      "finalUrl": "https://srivilliamsai.github.io/CarbonPersonalFootprintApp/",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://www.credly.com/users/srivilliamsai",
+      "status": 200,
+      "finalUrl": "https://www.credly.com/users/srivilliamsai",
+      "contentType": "text/html; charset=utf-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://www.instagram.com/sriwilliamsai",
+      "status": 200,
+      "finalUrl": "https://www.instagram.com/sriwilliamsai",
+      "contentType": "text/html; charset=\"utf-8\"",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "https://www.linkedin.com/in/srivilliamsai/",
+      "status": 999,
+      "finalUrl": "https://www.linkedin.com/in/srivilliamsai",
+      "contentType": "text/html",
+      "result": "Requires separate browser/platform review"
+    },
+    {
+      "url": "https://x.com/srivilliamsai",
+      "status": 200,
+      "finalUrl": "https://x.com/srivilliamsai",
+      "contentType": "text/html; charset=UTF-8",
+      "result": "HTTP reachable"
+    },
+    {
+      "url": "mailto:srivilliamsai@gmail.com",
+      "result": "URI format checked; no email or call initiated",
+      "valid": true
+    },
+    {
+      "url": "tel:+917339312067",
+      "result": "URI format checked; no email or call initiated",
+      "valid": true
+    }
+  ],
+  "scope": "Live browser acceptance checks for the recorded commit, not physical-device or screen-reader certification.",
+  "ciRun": "https://github.com/srivilliamsai/portfolio/actions/runs/41622769126",
+  "codeqlRun": "https://github.com/srivilliamsai/portfolio/actions/runs/41622769378",
+  "summary": {
+    "passedBrowserScenarios": [
+      "WEB-01",
+      "WEB-02",
+      "NAV-01",
+      "TERM-01",
+      "TERM-02",
+      "TERM-03",
+      "TERM-04",
+      "TERM-05",
+      "KEY-01"
+    ],
+    "httpLinksReachable": 15,
+    "limitedLinkCheck": "LinkedIn returned HTTP 999 to the automated request; its profile content was not verified.",
+    "contactURIs": "Email/telephone URI formats checked; no message or call sent.",
+    "notPerformed": [
+      "Physical-device touch testing",
+      "Dedicated screen-reader session",
+      "Reduced-motion browser session"
+    ]
+  }
+}
