@@ -1,6 +1,6 @@
 # Builder Center submission draft
 
-Status: drafting material only. The owner must confirm eligibility, supply the actual public AWS site URL and AWS screenshots, verify personal statements, and publish the final entry. This file is not evidence that an entry has been submitted.
+Status: drafting material only. The owner must confirm eligibility, confirm the deployed product screenshots, verify personal statements, and publish the final entry. This file is not evidence that an entry has been submitted.
 
 ## Project title
 
@@ -26,7 +26,7 @@ Open Terminal, type `story`, then `porjects`. Next type `glassora`, followed by 
 
 React and Vite build static assets. Shared records feed project cards and terminal responses. React Router handles pages, while local state tracks terminal input, history and project context. The answers require no AI endpoint, account or application database.
 
-AWS Amplify Hosting is the intended hosting service. The repository contains the Node 22 build specification, artifact checks, header settings and SPA rewrite rules. **Deployment is still pending**; after deploying, replace this status with the actual successful job, public HTTPS URL and applied settings. Separately featured projects' services are not portfolio hosting resources.
+AWS Amplify Hosting serves the portfolio. The repository contains the Node 22 build specification, artifact checks, header settings and SPA rewrite rules. The connected `main` branch is live on Amplify. GitHub Production reporting verifies the published commit and files; the final submission should include the owner’s actual AWS evidence. Separately featured projects' services are not portfolio hosting resources.
 
 ## Challenges and engineering takeaways
 
@@ -40,11 +40,11 @@ These are observations from the implemented code, not a claim about which proble
 
 | Item | Current state |
 |---|---|
-| Actual public Amplify URL | Pending owner deployment |
+| Actual public Amplify URL | Recorded in the repository About field and deployment guide |
 | Public source repository URL | [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio) |
 | Desktop/mobile product and feature captures | [Local product captures](TESTING.md) are available; capture/confirm the final deployed version |
 | Successful Amplify job and build/repository/branch settings | Pending; use real screenshots with unnecessary identifiers hidden |
-| Applied rewrite/header settings and direct-route check | Pending |
+| Applied rewrite/header settings and direct-route check | See the deployment and testing guides; final public revision must be checked |
 | Personal lessons and challenges | Owner to confirm and complete |
 | Originality eligibility | Previously public portfolio; organizer confirmation unresolved |
 | Published Builder Center project link | Pending owner publication |

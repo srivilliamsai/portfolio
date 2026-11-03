@@ -1,6 +1,8 @@
 # AWS Amplify deployment
 
-Status: prepared, not deployed. The source repository is [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio). The owner controls the AWS account and the final deployment. A development URL or example hostname is not proof of AWS hosting.
+Status: live at [AWS Amplify](https://main.d229cwpntq8yz1.amplifyapp.com). Source: [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio). The connected `main` branch builds on Amplify. The instructions below also document how to reproduce the hosting setup.
+
+The GitHub Production job verifies the exact public commit and hashes before reporting success. It does not initiate a second deployment or store AWS keys. See [SECURITY.md](SECURITY.md) and [CI.md](docs/CI.md).
 
 ## Build contract
 

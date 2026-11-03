@@ -4,20 +4,20 @@
 
 A personal portfolio connecting Java backend thinking, React interfaces and native iOS work. Visitors can browse projects, skills, open-source contributions and nine articles, or explore the same story through an interactive developer terminal.
 
-The portfolio is a static React/Vite application prepared for AWS Amplify Hosting. Its terminal answers portfolio questions using local code and project data; it does not call an AI service.
+The portfolio is a static React/Vite application hosted on AWS Amplify. Its terminal answers portfolio questions using local code and project data; it does not call an AI service.
 
 ![Desktop portfolio homepage supplied by the owner](docs/screenshots/portfolio-desktop.png)
 
-*Desktop screenshot supplied by the owner on 3 November 2026. Public AWS deployment evidence is still pending.*
+*Desktop screenshot supplied by the owner on 3 November 2026. The public site is available on AWS Amplify.*
 
 ## Review status
 
 | Item | Current status |
 |---|---|
-| Application | Implemented; 1,794 tests and production build passed, 3 November 2026 |
+| Application | Implemented; 1,832 tests and production build passed, 3 November 2026 |
 | Public AWS URL | Pending owner deployment |
 | Source URL | [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio) |
-| AWS evidence | Successful job, settings and public-route checks pending |
+| AWS evidence | [Live AWS site](https://main.d229cwpntq8yz1.amplifyapp.com); commit and file verification reported through the Production environment |
 | Originality | Previously public portfolio; organizer confirmation required |
 
 A development address is not a public submission URL. Creating a new folder or changing the host does not establish eligibility.
@@ -70,7 +70,7 @@ This runs the included unit tests, asset validation, local documentation links, 
 
 ## GitHub workflows
 
-[Portfolio CI](.github/workflows/ci.yml) verifies Node 22 on Linux, macOS and Windows, saving JUnit/TAP reports and a build for inspection. [Dependency audit](.github/workflows/dependency-audit.yml) checks locked packages; [Dependabot](.github/dependabot.yml) proposes weekly package/action updates. These workflows do not deploy. See the [CI guide](docs/CI.md) and [contribution guide](CONTRIBUTING.md).
+[Portfolio CI](.github/workflows/ci.yml) verifies Node 22 on Linux, macOS and Windows, saving JUnit/TAP reports and a build for inspection. [Dependency audit](.github/workflows/dependency-audit.yml) checks locked packages; [Dependabot](.github/dependabot.yml) proposes weekly package/action updates. Amplify builds connected pushes. The Production job reports success only after it verifies the published commit and file hashes. See the [CI guide](docs/CI.md) and [contribution guide](CONTRIBUTING.md).
 
 ## AWS implementation
 
@@ -88,7 +88,9 @@ Set public `VITE_SITE_URL` to the actual Amplify HTTPS origin when deploying. No
 
 - [Evaluation worksheet](docs/EVALUATION.md): qualification gates, evidence mapping and an unofficial 1,000-point review structure using the published weights. No perfect score is claimed.
 - [Architecture](docs/ARCHITECTURE.md): high-level design, component diagram and terminal sequence.
-- [Testing](docs/TESTING.md): reproducible checks and pending deployed/browser scenarios.
+- [Testing](docs/TESTING.md): reproducible checks, completed evidence and remaining manual scenarios.
 - [Submission draft](docs/SUBMISSION.md): feature explanation, engineering takeaways and the remaining evidence to supply.
 
 The [official challenge page](https://builder.aws.com/build/hackathons/3bff5627-ef21-3bfc-acfc-fce21d39a4f6/aws-student-builder-challenge-build-your-tech-superpower) remains authoritative for requirements and judging. The repository documents implementation and evidence; it does not establish eligibility or guarantee a ranking.
+
+Security controls and review limits are documented in [SECURITY.md](SECURITY.md).

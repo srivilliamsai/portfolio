@@ -55,3 +55,41 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 7
+
+  production:
+    name: Verify AWS Production
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    permissions:
+      contents: read
+      deployments: write
+    environment:
+      name: Production
+      url: https://main.d229cwpntq8yz1.amplifyapp.com
+    env:
+      PRODUCTION_URL: https://main.d229cwpntq8yz1.amplifyapp.com
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out the exact commit being reported
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Reject a superseded commit
+        shell: bash
+        run: |
+          current=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          test "$current" = "$GITHUB_SHA"
+      - name: Wait for the matching public AWS build and verify its file hashes
+        run: node scripts/verify-production.mjs
+      - name: Confirm the verified commit is still current
+        shell: bash
+        run: |
+          current=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          test "$current" = "$GITHUB_SHA"

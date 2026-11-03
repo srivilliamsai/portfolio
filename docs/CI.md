@@ -16,7 +16,7 @@ Invalid XML control characters from negative-input tests are stored as visible `
 
 [Dependabot](../.github/dependabot.yml) proposes weekly npm and GitHub Actions updates. Minor/patch npm updates are grouped; major updates remain separate. There is no automatic merge or deployment.
 
-Actions are pinned to verified commit hashes. Workflow permissions are read-only, checkout does not retain credentials, and pull requests use `pull_request` rather than a privileged target trigger. AWS credentials, an AI API key and an Amplify app connection are not required for CI. See [GitHub workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax) and [Dependabot options](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference).
+Actions are pinned to verified commit hashes. Verification and audit job permissions are read-only, checkout does not retain credentials, and pull requests use `pull_request` rather than a privileged target trigger. AWS credentials, an AI API key and an Amplify app connection are not required for CI. See [GitHub workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax) and [Dependabot options](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference).
 
 ## Local reproduction and scope
 
@@ -28,4 +28,14 @@ npm audit --audit-level=high
 
 For the deployment-origin guard, set `AWS_APP_ID` and `VITE_SITE_URL` as shown in the workflow, using your shell's environment syntax. `AWS_APP_ID` is only a local guard flag here; these checks do not call AWS. `npm run verify` runs the same checks without generating CI reports. Reports, build output and dependencies are ignored by Git.
 
-CI does not certify public AWS routes, availability, physical-device behavior, screen-reader support, eligibility or a judging score. Those scenarios remain separate in [TESTING.md](TESTING.md). Branch protection is not enabled automatically; the owner can require the three `Verify` jobs and dependency audit in GitHub settings after they have run successfully. Deployment remains an owner-controlled step in [DEPLOYMENT.md](../DEPLOYMENT.md).
+CI does not certify public AWS routes, availability, physical-device behavior, screen-reader support, eligibility or a judging score. Those scenarios remain separate in [TESTING.md](TESTING.md). The three matrix `Verify` checks are the required checks for `main`; the Production job is not required before merging because it observes the deployment after a push. Force pushes and branch deletion are blocked. Changes should pass CI on a branch before merging. Amplify deployment settings remain in [DEPLOYMENT.md](../DEPLOYMENT.md).
+
+## Verified Production environment
+
+The `Verify AWS Production` job runs only after the full matrix succeeds for a push to `main`. Pull requests cannot enter this job. It checks out the triggering SHA without retained credentials, waits up to 15 minutes for the public release marker, verifies the entry/theme/bundle hashes, and checks `main` before and after verification. Workflow concurrency cancels superseded runs. A failure or timeout does not produce a successful deployment.
+
+The job uses `contents: read` and `deployments: write`; the latter allows GitHub environment status reporting. There are no AWS access keys, GitHub personal tokens, external artifacts or privileged pull-request triggers. The Production environment permits `main` only. Existing Amplify automation performs the actual hosting deployment.
+
+The metadata is a public consistency check, not AWS-signed provenance. A failed Amplify build leaves the old commit online; the reporter then fails after its bounded wait. Check the Amplify build log for the underlying reason.
+
+GitHub CodeQL default setup scans supported languages weekly and on configured repository events. Dependabot security updates are enabled in addition to the weekly version-update configuration. No automated tool guarantees the absence of application vulnerabilities.

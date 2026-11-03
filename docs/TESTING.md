@@ -54,7 +54,7 @@ The desktop screenshot below was supplied by the owner on 3 November 2026. The m
 
 ## Deployed and manual acceptance scenarios
 
-These are expected outcomes to verify on the final public site, not completed claims.
+This table retains the earlier manual acceptance checklist. Current security and deployment evidence is recorded below; physical-device and assistive-technology checks remain manual.
 
 | ID | Scenario and expected outcome | Status |
 |---|---|---|
@@ -67,9 +67,9 @@ These are expected outcomes to verify on the final public site, not completed cl
 | TERM-04 | Switch to Wyndra and ask its free; unrecorded pricing stays unknown | Local unit coverage; public review pending |
 | TERM-05 | Change topic, Clear or reload before a follow-up; context resets and a missing project requires clarification | Local unit coverage; public review pending |
 | KEY-01 | Use Tab, Shift+Tab, completion, history and Escape; controls work, the draft restores and focus returns | Final keyboard review pending |
-| AWS-01 | Visit and refresh project/blog URLs directly; hosting serves the entry and the correct route renders | Deployment pending |
-| AWS-02 | Retrieve image, font and PDF files; return the right file type instead of SPA HTML | Deployment pending |
-| AWS-03 | Inspect metadata, sitemap and headers; they match the real origin and intended configuration | Deployment pending |
+| AWS-01 | Visit and refresh project/blog URLs directly; hosting serves the entry and the correct route renders | Public homepage, blog and case-study deep routes checked on 3 November 2026 |
+| AWS-02 | Retrieve image, font and PDF files; return the right file type instead of SPA HTML | Public representative image, font and PDF responses checked on 3 November 2026 |
+| AWS-03 | Inspect metadata, sitemap and headers; they match the real origin and intended configuration | Metadata and existing headers checked; new headers require deployment of this revision |
 | EXT-01 | Open source, project, résumé, contact and contribution links; destinations remain accessible | External verification pending |
 | A11Y-01 | Review physical touch, screen reader and reduced motion; labels, announcements, focus and motion remain useful | Dedicated review pending |
 
@@ -78,3 +78,11 @@ Glassora's embedded download-price record is dated 3 November 2026 for India. It
 ## Interpreting results
 
 A passed source or configuration check is narrower than a successful public workflow. The scanner is focused, not an exhaustive secret/security audit. There is no measured deployed uptime, latency, Web Vitals score, native-app test execution or official competition score in these results. A missing public URL, screenshots or eligibility confirmation remains pending even when local tests pass.
+
+## Security and Production reporting — 3 November 2026
+
+The current local Node 22 suite passes **1,832 tests**, including restricted article markup, unsafe URL schemes, terminal input/history limits, stale/wrong-origin release records, missing/tampered published files, network errors, bounded responses and deployment timeouts. The build checks every emitted release hash against the compiled artifact. The full verification command also checks assets, documentation and production metadata. Workflow YAML passes actionlint 1.7.12.
+
+The production preview uses the actual `customHttp.yml` browser headers. Browser validation covers rendering, the terminal, literal HTML-like command input, mobile navigation and an article deep route. This is a targeted browser check, not a complete accessibility or penetration test. The new Production workflow supplies ongoing public commit/file verification after a push; its actual outcome is available in GitHub Actions and the repository environment.
+
+The focused credential scan and npm lockfile audit are point-in-time checks. No claim is made about the complete Git history, every upstream dependency, AWS account permissions or separately hosted app backends.

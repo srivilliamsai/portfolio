@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { useTerminal } from '../../context/TerminalContext';
 import { getTerminalReply, getTerminalCompletions, resolveTerminalCommand, terminalWelcome } from '../../services/terminalCommands';
-import { terminalHistoryReducer, initialHistoryState } from '../../services/terminalHistory';
+import { terminalHistoryReducer, initialHistoryState, TERMINAL_INPUT_LIMIT, appendTerminalEntry, boundTerminalInput } from '../../services/terminalHistory';
 import { terminalInputAction, terminalShortcuts } from '../../services/terminalKeyboard';
+
+import { isSafeLink } from '../../services/linkSafety';
 
 function renderOutput(text) {
   return text.split(/(https?:\/\/[^\s]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})/g).map((part, index) => {
-    if (/^https?:\/\//.test(part)) return <a key={index} className="terminal-output-link" href={part} target="_blank" rel="noreferrer">{part}</a>;
+    if (/^https?:\/\//.test(part) && isSafeLink(part)) return <a key={index} className="terminal-output-link" href={part} target="_blank" rel="noreferrer">{part}</a>;
     if (/^[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(part)) return <a key={index} className="terminal-output-link" href={`mailto:${part}`}>{part}</a>;
     return part;
   });
@@ -66,7 +68,7 @@ export default function DevTerminal() {
   useEffect(() => { if (logsRef.current) logsRef.current.scrollTop = logsRef.current.scrollHeight; }, [history, isTerminalOpen, feedback]);
 
   const execute = (value = input) => {
-    const command = value.trim();
+    const command = boundTerminalInput(value).trim();
     if (!command) return;
     setFeedback('');
     dispatchRecall({ type: 'execute', command });
@@ -74,7 +76,7 @@ export default function DevTerminal() {
     const reply = getTerminalReply(command, conversationRef.current);
     conversationRef.current = reply.context;
     if (resolved.command === 'clear') setHistory(resolved.corrected ? [{ command, output: reply.output }] : []);
-    else setHistory((previous) => [...previous, { command, output: reply.output }]);
+    else setHistory((previous) => appendTerminalEntry(previous, { command, output: reply.output }));
     inputRef.current?.focus();
   };
 
@@ -140,7 +142,7 @@ export default function DevTerminal() {
             ))}
           </div>
           <p className="terminal-feedback" role="status">{feedback}</p>
-          <label className="terminal-input-line"><TerminalPrompt /><span className="sr-only">Terminal command</span><input ref={inputRef} type="text" className="dev-terminal-input" value={input} onChange={(event) => { dispatchRecall({ type: 'type', value: event.target.value }); setFeedback(''); }} onKeyDown={handleInputKey} placeholder="Type command here (try 'help')..." spellCheck={false} autoComplete="off" autoCapitalize="none" enterKeyHint="send" /></label>
+          <label className="terminal-input-line"><TerminalPrompt /><span className="sr-only">Terminal command</span><input ref={inputRef} type="text" maxLength={TERMINAL_INPUT_LIMIT} className="dev-terminal-input" value={input} onChange={(event) => { dispatchRecall({ type: 'type', value: event.target.value }); setFeedback(''); }} onKeyDown={handleInputKey} placeholder="Type command here (try 'help')..." spellCheck={false} autoComplete="off" autoCapitalize="none" enterKeyHint="send" /></label>
         </div>
         <footer className="terminal-shortcut-bar" aria-label="Terminal keyboard shortcuts">
           <p><kbd>Enter</kbd> run <span aria-hidden="true">·</span> <kbd>↑↓</kbd> history <span aria-hidden="true">·</span> <kbd>Tab</kbd> complete</p>

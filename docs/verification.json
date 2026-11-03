@@ -389,5 +389,18 @@
     "deploys": false,
     "runsUrl": "https://github.com/srivilliamsai/portfolio/actions",
     "localVerificationPassed": true
+  },
+  "securityHardening": {
+    "date": "2026-11-03",
+    "localTests": {
+      "total": 1832,
+      "pass": 1832,
+      "fail": 0
+    },
+    "scope": "Focused hardening of the static portfolio, local terminal, authored article HTML and public release consistency reporting. Not an exhaustive penetration test or AWS account audit.",
+    "productionOrigin": "https://main.d229cwpntq8yz1.amplifyapp.com",
+    "productionReporting": ".github/workflows/ci.yml: production job; GitHub records the actual remote outcome",
+    "securityPolicy": "SECURITY.md",
+    "historicalRecords": "Earlier records in this file describe their dated predeployment revision; this section supersedes their deployment-pending scope."
   }
 }
