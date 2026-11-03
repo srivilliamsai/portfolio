@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkArrow from '../components/common/LinkArrow';
 import SEO from '../components/common/SEO';
 import Reveal from '../components/common/Reveal';
 import { useTheme } from '../context/ThemeContext';
@@ -221,7 +222,7 @@ export default function Home() {
             <h2 id="certs-title" className="heading-lg">Learning, put into practice.</h2>
             <p className="text-muted-foreground">My learning spans cloud development, databases, AI tools, and software fundamentals. Explore my public credential profile for individual issuers and badge details.</p>
           </div>
-          <a className="portfolio-button" href={portfolio.credentials} target="_blank" rel="noreferrer">View credentials on Credly <span aria-hidden="true">↗</span></a>
+          <a className="portfolio-button" href={portfolio.credentials} target="_blank" rel="noreferrer">View credentials on Credly <LinkArrow /></a>
         </div>
       </section>
 

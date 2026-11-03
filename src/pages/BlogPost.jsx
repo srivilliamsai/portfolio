@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import SEO from '../components/common/SEO';
 import BlogCard from '../components/blog/BlogCard';
 import { blogPosts } from '../data/blogs';
@@ -30,7 +30,6 @@ export default function BlogPost() {
         <div className="container-padding-x container mx-auto">
           <article className="flex flex-col gap-12 md:gap-16">
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center md:gap-6">
-              <Link className="portfolio-text-link" to="/blog">← Back to blog</Link>
               <h1 className="heading-xl" id="article-title">
                 {post.title}
               </h1>

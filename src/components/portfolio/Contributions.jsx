@@ -1,11 +1,12 @@
 import React from 'react';
+import LinkArrow from '../common/LinkArrow';
 import { contributions, contributionsVerifiedOn } from '../../data/contributions';
 
 function Contribution({ item }) {
   return (
     <article className="contribution-card">
       <div className="contribution-meta"><span className="portfolio-eyebrow">Merged · PR #{item.number}</span><time dateTime={item.mergedAt}>{new Date(`${item.mergedAt}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })}</time></div>
-      <h3><a href={item.url} target="_blank" rel="noreferrer">{item.title} <span aria-hidden="true">↗</span></a></h3>
+      <h3><a href={item.url} target="_blank" rel="noreferrer">{item.title} <LinkArrow /></a></h3>
       <p className="text-muted-foreground">{item.problem}</p>
       <details className="contribution-details"><summary>What I contributed</summary><p>{item.contribution}</p></details>
       <ul className="portfolio-tags" aria-label={`${item.title} technologies`}>{item.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>

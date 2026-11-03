@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkArrow from '../common/LinkArrow';
 import { projects } from '../../data/projects';
 
 export default function ProjectOverview({ id }) {
@@ -15,9 +16,9 @@ export default function ProjectOverview({ id }) {
         </div>
         <p className="project-scope">{project.scope}</p>
         {(project.source || project.demo || project.relatedSource) && <div className="project-links project-overview-links">
-          {project.source && <a className="portfolio-text-link" href={project.source} target="_blank" rel="noreferrer">Project source <span aria-hidden="true">↗</span></a>}
-          {project.demo && <a className="portfolio-text-link" href={project.demo} target="_blank" rel="noreferrer">{project.demoLabel} <span aria-hidden="true">↗</span></a>}
-          {project.relatedSource && <a className="portfolio-text-link" href={project.relatedSource} target="_blank" rel="noreferrer">{project.relatedSourceLabel} <span aria-hidden="true">↗</span></a>}
+          {project.source && <a className="portfolio-text-link" href={project.source} target="_blank" rel="noreferrer">Project source <LinkArrow /></a>}
+          {project.demo && <a className="portfolio-text-link" href={project.demo} target="_blank" rel="noreferrer">{project.demoLabel} <LinkArrow /></a>}
+          {project.relatedSource && <a className="portfolio-text-link" href={project.relatedSource} target="_blank" rel="noreferrer">{project.relatedSourceLabel} <LinkArrow /></a>}
         </div>}
       </div>
     </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkArrow from '../common/LinkArrow';
 import { Link } from 'react-router-dom';
 import { skillGroups } from '../../data/portfolio';
 
@@ -36,7 +37,7 @@ export default function Skills() {
               <ul className="portfolio-tags skill-card-skills" aria-label={`${group.title} skills`}>
                 {group.skills.map((skill) => <li key={skill}>{skill}</li>)}
               </ul>
-              <Link className="portfolio-text-link skill-card-link" to={`/${group.project}`}>{group.evidence} <span aria-hidden="true">↗</span></Link>
+              <Link className="portfolio-text-link skill-card-link" to={`/${group.project}`}>{group.evidence} <LinkArrow /></Link>
             </article>
           ))}
         </div>

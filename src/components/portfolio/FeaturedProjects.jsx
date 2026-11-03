@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkArrow from '../common/LinkArrow';
 import { Link } from 'react-router-dom';
 import { projects } from '../../data/projects';
 
@@ -10,7 +11,7 @@ function ProjectCard({ project, spotlight = false }) {
     <article className={`featured-project${spotlight ? ' featured-project-spotlight' : ''}`}>
       <Link to={project.link} className="featured-project-link" aria-labelledby={`featured-${project.id}`}>
         <div className="featured-project-content">
-          <h3 id={`featured-${project.id}`}>{project.title}<span aria-hidden="true">↗</span></h3>
+          <h3 id={`featured-${project.id}`}>{project.title} <LinkArrow /></h3>
           <p className="text-muted-foreground">{project.description}</p>
         </div>
         <picture className="featured-project-cover">

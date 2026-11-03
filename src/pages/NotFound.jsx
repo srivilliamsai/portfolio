@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkArrow from '../components/common/LinkArrow';
 import { Link } from 'react-router-dom';
 import SEO from '../components/common/SEO';
 
@@ -13,7 +14,7 @@ export default function NotFound() {
           <p>The link may have changed. You can still explore my work from here.</p>
           <div className="project-links">
             <Link className="portfolio-button" to="/">Back to home</Link>
-            <Link className="portfolio-text-link" to="/#projects">View projects <span aria-hidden="true">↗</span></Link>
+            <Link className="portfolio-text-link" to="/#projects">View projects <LinkArrow /></Link>
           </div>
         </div>
       </section>
