@@ -3,7 +3,7 @@
   "localDate": "2026-11-03",
   "timezone": "Asia/Kolkata",
   "node": "v22.23.4",
-  "scope": "AWS portfolio only. Added GitHub CI, portable test/report tooling, hosting regression cases and compatible build-tool security fixes. Website source and public assets unchanged. No deployment.",
+  "scope": "AWS portfolio verification history. Earlier sections retain their dated local/predeployment results; securityHardening and security-validation.json record the completed public hardening validation.",
   "automated": {
     "command": "npm ci followed by npm run verify:ci",
     "execution": "Isolated byte-identical application copy; final delivery contains no node_modules or dist",
@@ -147,8 +147,6 @@
   },
   "pending": [
     "Previously published portfolio eligibility requires organizer confirmation",
-    "Actual public AWS URL and successful job/settings evidence",
-    "Deployed routes, assets, headers and availability",
     "Fresh external-link checks",
     "Physical-device and assistive-technology review",
     "Owner-confirmed personal lessons and final project publication"
@@ -399,8 +397,9 @@
     },
     "scope": "Focused hardening of the static portfolio, local terminal, authored article HTML and public release consistency reporting. Not an exhaustive penetration test or AWS account audit.",
     "productionOrigin": "https://main.d229cwpntq8yz1.amplifyapp.com",
-    "productionReporting": ".github/workflows/ci.yml: production job; GitHub records the actual remote outcome",
+    "productionReporting": "Successful CI and Production run: https://github.com/srivilliamsai/portfolio/actions/runs/41618378680",
     "securityPolicy": "SECURITY.md",
-    "historicalRecords": "Earlier records in this file describe their dated predeployment revision; this section supersedes their deployment-pending scope."
+    "historicalRecords": "Earlier records in this file describe their dated predeployment revision; this section supersedes their deployment-pending scope.",
+    "publicValidation": "docs/security-validation.json"
   }
 }

@@ -69,7 +69,7 @@ This table retains the earlier manual acceptance checklist. Current security and
 | KEY-01 | Use Tab, Shift+Tab, completion, history and Escape; controls work, the draft restores and focus returns | Final keyboard review pending |
 | AWS-01 | Visit and refresh project/blog URLs directly; hosting serves the entry and the correct route renders | Public homepage, blog and case-study deep routes checked on 3 November 2026 |
 | AWS-02 | Retrieve image, font and PDF files; return the right file type instead of SPA HTML | Public representative image, font and PDF responses checked on 3 November 2026 |
-| AWS-03 | Inspect metadata, sitemap and headers; they match the real origin and intended configuration | Metadata and existing headers checked; new headers require deployment of this revision |
+| AWS-03 | Inspect metadata, sitemap and headers; they match the real origin and intended configuration | Public origin metadata and the deployed CSP/HSTS/permissions headers checked on 3 November 2026 |
 | EXT-01 | Open source, project, résumé, contact and contribution links; destinations remain accessible | External verification pending |
 | A11Y-01 | Review physical touch, screen reader and reduced motion; labels, announcements, focus and motion remain useful | Dedicated review pending |
 
@@ -86,3 +86,5 @@ The current local Node 22 suite passes **1,832 tests**, including restricted art
 The production preview uses the actual `customHttp.yml` browser headers. Browser validation covers rendering, the terminal, literal HTML-like command input, mobile navigation and an article deep route. This is a targeted browser check, not a complete accessibility or penetration test. The new Production workflow supplies ongoing public commit/file verification after a push; its actual outcome is available in GitHub Actions and the repository environment.
 
 The focused credential scan and npm lockfile audit are point-in-time checks. No claim is made about the complete Git history, every upstream dependency, AWS account permissions or separately hosted app backends.
+
+Completed public validation is recorded in [security-validation.json](security-validation.json): all 18 canonical route responses and five representative assets passed HTTP/MIME/security-header checks. GitHub verified all 18 release file hashes for commit `b1a93f7`; all three platform jobs passed 1,832 tests each. [The successful CI and Production run](https://github.com/srivilliamsai/portfolio/actions/runs/41618378680), CodeQL and dependency-audit runs are linked in the report. This snapshot does not establish long-term availability.

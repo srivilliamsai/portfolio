@@ -1,0 +1,239 @@
+{
+  "checkedAt": "2026-11-03T10:24:11.836Z",
+  "origin": "https://main.d229cwpntq8yz1.amplifyapp.com",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/carbon-footprint",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/glassora",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/pitstop",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/wyndra",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/privacy-policy",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/terms-of-service",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/cookies-settings",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/open-source-contributions-easy-to-review",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/react-spring-boot-api-contract",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/designing-image-loading-in-swiftui",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/i-built-an-app-with-gpt-in-a-day",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/ai-in-development",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/frontend-vs-backend-still-a-thing",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/ai-doesnt-get-sarcasm",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/the-silent-bug-that-cost-us-millions",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/blog/why-ai-wont-steal-your-job",
+      "status": 200,
+      "type": "text/html",
+      "bytes": 3364,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/static/theme.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 567,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/static/media/home_hero-section.png",
+      "status": 200,
+      "type": "image/png",
+      "bytes": 110994,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/static/fonts/569ce4b8f30dc480-s.p.woff2",
+      "status": 200,
+      "type": "font/woff2",
+      "bytes": 28356,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/static/media/resume.pdf",
+      "status": 200,
+      "type": "application/pdf",
+      "bytes": 71829,
+      "securityHeadersPresent": true,
+      "passed": true
+    },
+    {
+      "path": "/deployment.json",
+      "status": 200,
+      "type": "application/json",
+      "bytes": 2216,
+      "securityHeadersPresent": true,
+      "passed": true
+    }
+  ],
+  "commit": "b1a93f7b9ef8ee8f0c3d6853db0f172d019c839c",
+  "ciRun": "https://github.com/srivilliamsai/portfolio/actions/runs/41618378680",
+  "codeqlRun": "https://github.com/srivilliamsai/portfolio/actions/runs/41618378564",
+  "dependencyAuditRun": "https://github.com/srivilliamsai/portfolio/actions/runs/41618551465",
+  "ci": {
+    "platforms": [
+      "ubuntu-latest",
+      "macos-latest",
+      "windows-latest"
+    ],
+    "testsPerPlatform": 1832,
+    "failuresPerPlatform": 0
+  },
+  "production": {
+    "environment": "Production",
+    "state": "success",
+    "deploymentId": 7516077799,
+    "verifiedFileHashes": 18
+  },
+  "security": {
+    "npmKnownVulnerabilities": 0,
+    "openCodeqlAlerts": 0,
+    "secretScanning": "enabled",
+    "pushProtection": "enabled",
+    "dependabotSecurityUpdates": "enabled",
+    "mainRequiredChecks": 3,
+    "forcePushesAllowed": false,
+    "branchDeletionAllowed": false
+  },
+  "browser": {
+    "localProductionHeaders": [
+      "desktop rendering",
+      "mobile menu and terminal",
+      "literal HTML-like terminal text",
+      "history draft restoration",
+      "article deep route"
+    ],
+    "public": [
+      "homepage rendering",
+      "external theme bootstrap",
+      "no console security-policy errors"
+    ]
+  },
+  "limits": [
+    "Focused static-site hardening, not a comprehensive penetration test",
+    "No complete Git-history or AWS-account-permissions audit",
+    "Physical-device and assistive-technology review remain separate",
+    "This report describes the commit above; GitHub records later deployment outcomes"
+  ]
+}
