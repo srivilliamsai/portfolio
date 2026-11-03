@@ -147,7 +147,6 @@
   },
   "pending": [
     "Previously published portfolio eligibility requires organizer confirmation",
-    "Fresh external-link checks",
     "Physical-device and assistive-technology review",
     "Owner-confirmed personal lessons and final project publication"
   ],
@@ -401,5 +400,27 @@
     "securityPolicy": "SECURITY.md",
     "historicalRecords": "Earlier records in this file describe their dated predeployment revision; this section supersedes their deployment-pending scope.",
     "publicValidation": "docs/security-validation.json"
+  },
+  "currentLiveAcceptance": {
+    "date": "2026-11-03",
+    "commit": "2af73d700bc5babfd5ee369ba205182affe30077",
+    "report": "docs/live-acceptance.json",
+    "passedBrowserScenarios": [
+      "WEB-01",
+      "WEB-02",
+      "NAV-01",
+      "TERM-01",
+      "TERM-02",
+      "TERM-03",
+      "TERM-04",
+      "TERM-05",
+      "KEY-01"
+    ],
+    "limitations": [
+      "Physical-device touch testing",
+      "Dedicated screen-reader session",
+      "Reduced-motion browser session",
+      "LinkedIn returned HTTP 999 to the automated request; its profile content was not verified."
+    ]
   }
 }
