@@ -1,0 +1,377 @@
+{
+  "checkedAt": "2026-11-03T07:40:54.625536+00:00",
+  "localDate": "2026-11-03",
+  "timezone": "Asia/Kolkata",
+  "node": "v22.23.4",
+  "scope": "AWS portfolio only. Added GitHub CI, portable test/report tooling, hosting regression cases and compatible build-tool security fixes. Website source and public assets unchanged. No deployment.",
+  "automated": {
+    "command": "npm ci followed by npm run verify:ci",
+    "execution": "Isolated byte-identical application copy; final delivery contains no node_modules or dist",
+    "unitTests": {
+      "total": 1794,
+      "pass": 1794,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "testFiles": 8,
+      "uniqueQuestionCases": 1630,
+      "multiTurnCases": 125,
+      "hostingRegressionCases": 7,
+      "reportRegressionCases": 3
+    },
+    "assetReferences": 51,
+    "publicFiles": 51,
+    "build": "passed",
+    "artifactCheck": "passed",
+    "productionOrigin": "Public example Amplify origin used only for configuration validation; not deployed or contacted",
+    "rewrite": {
+      "canonicalRoutesMatched": 18,
+      "staticAssetsExcluded": 51
+    },
+    "reports": {
+      "formats": [
+        "JUnit XML",
+        "TAP"
+      ],
+      "junitXmlParsed": true,
+      "testcases": 1794,
+      "failures": 0,
+      "artifacts": "Generated locally; GitHub workflow uploads reports on each runner. Generated reports are not committed."
+    },
+    "dependencyAudit": {
+      "checkedAt": "2026-11-03T07:40:54.625536+00:00",
+      "command": "npm audit --audit-level=high",
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "fixes": {
+        "vite": "6.4.3 -> 6.4.5",
+        "source-map-js": "1.2.1 -> 1.2.2"
+      },
+      "scope": "All installed runtime and build dependencies; point-in-time registry check"
+    }
+  },
+  "integrity": {
+    "baselineFiles": 138,
+    "runtimeSourceFiles": 42,
+    "runtimeSourceFilesChanged": 0,
+    "publicAssetFiles": 51,
+    "publicAssetFilesChanged": 0,
+    "lockfileChanged": true,
+    "previousDocumentationRecord": {
+      "nonDocumentationFilesUnchanged": 116,
+      "manifestDigest": "cf551fd340627c6053d18e0978c6716630064272adb9fab4191c510bb69cfede",
+      "runtimeSourceFiles": 42
+    }
+  },
+  "browser": {
+    "environment": "Isolated local production preview; not AWS hosting",
+    "observations": [
+      {
+        "check": "Desktop homepage",
+        "overflow": false,
+        "title": "Full Stack Developer",
+        "width": 1440
+      },
+      {
+        "check": "Terminal story",
+        "pass": true
+      },
+      {
+        "check": "Glassora context follow-up",
+        "pass": true
+      },
+      {
+        "check": "Wyndra context switch preserves unknown pricing",
+        "pass": true
+      },
+      {
+        "check": "Command typo correction",
+        "pass": true
+      },
+      {
+        "check": "Escape closes desktop dialog and returns focus",
+        "pass": true
+      },
+      {
+        "check": "Mobile menu Terminal discovery",
+        "overflow": false,
+        "terminalVisible": true,
+        "width": 390
+      },
+      {
+        "check": "Mobile menu opens terminal",
+        "pass": true
+      }
+    ],
+    "screenshots": [
+      {
+        "file": "docs/screenshots/local-desktop.png",
+        "sha256": "7a068025f1c6115b7d040b4fff30c4e56ea0a068df6bd4684712b2d47e0ed04f"
+      },
+      {
+        "file": "docs/screenshots/local-mobile-menu.png",
+        "sha256": "3ff2a13c50879046503bd49f09f2cf746bd14b1e880cfa9456503439d2e0dc51"
+      },
+      {
+        "file": "docs/screenshots/local-terminal-story.png",
+        "sha256": "66d07aabf230b77f155b5a284507d663cbd5dde86d6b43c985fef4b92b865d45"
+      },
+      {
+        "file": "docs/screenshots/local-terminal-followup.png",
+        "sha256": "8aab47a083c310f6717bcc19eb37da9822c90503d7a5ef0c1927fb7315d1eaa4"
+      }
+    ]
+  },
+  "evaluation": {
+    "officialCategoryWeights": {
+      "creativity": 30,
+      "awsImplementation": 25,
+      "communication": 25,
+      "usability": 20
+    },
+    "worksheetMaximum": 1000,
+    "awardedScore": null,
+    "officialScore": null
+  },
+  "pending": [
+    "Previously published portfolio eligibility requires organizer confirmation",
+    "Actual public AWS URL and successful job/settings evidence",
+    "Deployed routes, assets, headers and availability",
+    "Fresh external-link checks",
+    "Physical-device and assistive-technology review",
+    "Owner-confirmed personal lessons and final project publication"
+  ],
+  "deployed": false,
+  "submitted": false,
+  "documentation": {
+    "markdownFiles": 9,
+    "localLinkTargetsVerified": 66,
+    "renderedDiagrams": 4,
+    "diagramFormats": [
+      "PNG",
+      "SVG"
+    ],
+    "mermaidRequiredForDisplay": false,
+    "originalMermaidNotation": "Preserved in SVG metadata",
+    "codeFencesBalanced": true,
+    "worksheetMaximumVerified": 1000,
+    "publishedIntoBuild": false,
+    "layoutReview": {
+      "checkedAt": "2026-11-03T07:29:06.484Z",
+      "geometry": [
+        {
+          "issues": [],
+          "nodeCount": 8,
+          "title": "Component design and local state"
+        },
+        {
+          "issues": [],
+          "nodeCount": 5,
+          "title": "Portfolio architecture at a glance"
+        },
+        {
+          "issues": [],
+          "nodeCount": 8,
+          "title": "System design and deployment boundary"
+        },
+        {
+          "issues": [],
+          "nodeCount": 4,
+          "title": "Terminal interaction sequence"
+        }
+      ],
+      "documents": [
+        {
+          "document": "README",
+          "images": [
+            {
+              "alt": "Desktop portfolio homepage from a local production preview",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "Portfolio build and browser runtime architecture",
+              "insidePage": true,
+              "loaded": true
+            }
+          ],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 1280
+        },
+        {
+          "document": "Architecture",
+          "images": [
+            {
+              "alt": "System design, build pipeline and portfolio runtime boundary",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "React component boundaries and local terminal modules",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "Glassora overview and pricing follow-up sequence",
+              "insidePage": true,
+              "loaded": true
+            }
+          ],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 1280
+        },
+        {
+          "document": "Evaluation",
+          "images": [],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 1280
+        },
+        {
+          "document": "Testing",
+          "images": [],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 1280
+        },
+        {
+          "document": "README",
+          "images": [
+            {
+              "alt": "Desktop portfolio homepage from a local production preview",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "Portfolio build and browser runtime architecture",
+              "insidePage": true,
+              "loaded": true
+            }
+          ],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 390
+        },
+        {
+          "document": "Architecture",
+          "images": [
+            {
+              "alt": "System design, build pipeline and portfolio runtime boundary",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "React component boundaries and local terminal modules",
+              "insidePage": true,
+              "loaded": true
+            },
+            {
+              "alt": "Glassora overview and pricing follow-up sequence",
+              "insidePage": true,
+              "loaded": true
+            }
+          ],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 390
+        },
+        {
+          "document": "Evaluation",
+          "images": [],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 390
+        },
+        {
+          "document": "Testing",
+          "images": [],
+          "pageOverflow": false,
+          "tableOverflows": 0,
+          "width": 390
+        }
+      ],
+      "geometryChecks": "Rendered text boundaries checked in browser; no clipped node labels or intersecting node cards",
+      "nodeCardsChecked": 25,
+      "nodeOverlaps": 0,
+      "diagrams": [
+        {
+          "name": "overview",
+          "width": 960,
+          "height": 840,
+          "pngWidth": 1920,
+          "pngHeight": 1680,
+          "pngSha256": "c45d8aa8212969ea60b63ba415f856127c7c7525f7519a5d0fb563c0c341ef23",
+          "svgSha256": "e8337eb4ad04780496f19e3fa9ea528eb343ab1ea06d907e5e5ccca9252271bd"
+        },
+        {
+          "name": "system-design",
+          "width": 1120,
+          "height": 846,
+          "pngWidth": 2240,
+          "pngHeight": 1692,
+          "pngSha256": "5fde5834be7ff5bef2b86ea922cbbfa13e3b7d094680c12abaab9c8f59709dd9",
+          "svgSha256": "614929f24ebad731a8a9e6d6a6cd75f1ff8f27fce7c7ead42ef323a0ddea0087"
+        },
+        {
+          "name": "component-design",
+          "width": 1040,
+          "height": 1100,
+          "pngWidth": 2080,
+          "pngHeight": 2200,
+          "pngSha256": "a98b0c33800f45a650a9ba594b987cc40bc1dfae77f4379bec13af20deb72a9e",
+          "svgSha256": "f1b655c3acfe41dd6dc3ff71f72260103a42eabad6ad50b9b743e883a0b44269"
+        },
+        {
+          "name": "terminal-sequence",
+          "width": 1040,
+          "height": 1176,
+          "pngWidth": 2080,
+          "pngHeight": 2352,
+          "pngSha256": "bc3d993882cdddf3295cb05103506c7c10d88b0afe097a7b25714866f2535137",
+          "svgSha256": "dfa601fca4d44a8474c8539783b1acbec6b6a67e9e431208394d09d6208d894a"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "docs/screenshots/document-layout-desktop.png",
+          "sha256": "c466b45c5819008ed1d6e559a667320992c206a977df7e846bd42f51bd0610c2"
+        },
+        {
+          "file": "docs/screenshots/document-layout-mobile.png",
+          "sha256": "d79a558a955c1f229e9c79904b7f0faa5dca799404f78639da231d5733a406d6"
+        }
+      ]
+    },
+    "linkCheck": "npm run check:docs checks local file/image/directory targets; external URLs and anchor IDs are excluded"
+  },
+  "repository": {
+    "url": "https://github.com/srivilliamsai/portfolio",
+    "visibility": "public",
+    "branch": "main",
+    "checkedAt": "2026-11-03T07:40:54.625536+00:00",
+    "scope": "Target repository access and owner push permission verified. Workflow results are tracked in GitHub Actions."
+  },
+  "ci": {
+    "workflow": ".github/workflows/ci.yml",
+    "matrix": [
+      "ubuntu-latest",
+      "macos-latest",
+      "windows-latest"
+    ],
+    "node": "22",
+    "workflowSyntax": "Both workflow files passed actionlint 1.7.12",
+    "dependencyAuditWorkflow": ".github/workflows/dependency-audit.yml",
+    "dependabot": ".github/dependabot.yml",
+    "deploys": false,
+    "runsUrl": "https://github.com/srivilliamsai/portfolio/actions",
+    "localVerificationPassed": true
+  }
+}

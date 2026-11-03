@@ -1,0 +1,41 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node scripts/run-tests.mjs",
+    "test:terminal": "node scripts/run-tests.mjs --terminal",
+    "check:assets": "node scripts/check-assets.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "verify": "npm test && npm run check:assets && npm run check:docs && npm run build && npm run check:dist",
+    "test:ci": "node scripts/run-tests.mjs --ci",
+    "check:docs": "node scripts/check-docs.mjs",
+    "verify:ci": "npm run test:ci && npm run check:assets && npm run check:docs && npm run build && npm run check:dist"
+  },
+  "dependencies": {
+    "framer-motion": "^13.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "esbuild": "^0.25.12",
+    "postcss": "^8.5.26",
+    "vite": "^6.4.5"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/srivilliamsai/portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/srivilliamsai/portfolio/issues"
+  }
+}

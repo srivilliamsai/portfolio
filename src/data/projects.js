@@ -1,0 +1,67 @@
+export const projects = [
+  {
+    id: "pitstop",
+    slug: "pitstop",
+    title: "PitStop",
+    description: "A roadside assistance concept for finding fuel stations, comparing services, and requesting help.",
+    contribution: "Designed the responsive discovery experience and map-based interface.",
+    technologies: ['React', 'Vite', 'Leaflet'],
+    status: 'Web interface concept',
+    relatedSource: 'https://github.com/srivilliamsai/pitstop',
+    relatedSourceLabel: 'Separate Flutter implementation',
+    scope: 'This case study covers the React web interface concept. The public PitStop Flutter/Dart application is a separate implementation. The screens illustrate discovery, pricing and assistance flows; they are not evidence of a live fuel-price feed or emergency dispatch service.',
+    landscapeCover: "/static/media/projectcover/pitstop-cover-landscape.png",
+    portraitCover: "/static/media/projectcover/pitstop-cover-portrait.png",
+    link: "/pitstop"
+  },
+  {
+    id: "carbon-footprint",
+    slug: "carbon-footprint",
+    title: "Carbon Footprint",
+    description: "A sustainability project that helps people understand and track their personal carbon footprint.",
+    contribution: "Built a full-stack project combining a React interface with a Spring Boot backend.",
+    technologies: ['Java', 'Spring Boot', 'React'],
+    status: 'Learning project · demo available',
+    scope: 'A learning project with a React interface and a separate Spring Boot backend. The linked frontend demo is a UI preview; it does not establish that every backend integration is running. Emissions are estimates rather than independently verified measurements.',
+    source: 'https://github.com/srivilliamsai/CarbonPersonalFootprintApp',
+    demo: 'https://srivilliamsai.github.io/CarbonPersonalFootprintApp/',
+    demoLabel: 'Frontend demo',
+    landscapeCover: "/static/media/projectcover/carbon-footprint-cover.png",
+    portraitCover: "/static/media/projectcover/carbon-footprint-cover.png",
+    link: "/carbon-footprint"
+  },
+  {
+    id: "wyndra",
+    slug: "wyndra",
+    title: "Wyndra",
+    description: "An Apple Weather-inspired native iOS weather app with detailed forecasts and dynamic interfaces.",
+    contribution: "Built the SwiftUI screens and weather-data experience, from conditions to detailed metrics.",
+    technologies: ['Swift', 'SwiftUI', 'OpenWeather'],
+    status: 'iOS project',
+    scope: 'A native SwiftUI weather project using OpenWeather data. The images are an app walkthrough, and the metric preview below cycles through screenshots. It is independent of the Carbon Footprint Java backend.',
+    landscapeCover: "/static/media/projectcover/wyndra-cover.png",
+    portraitCover: "/static/media/projectcover/wyndra-cover.png",
+    link: "/wyndra"
+  },
+  {
+    id: "glassora",
+    slug: "glassora",
+    title: "Glassora",
+    description: "A native iOS wallpaper app for discovering and saving high-resolution backgrounds.",
+    contribution: "Built the SwiftUI browsing experience with asynchronous image loading and cloud-backed content.",
+    technologies: ['SwiftUI', 'Firebase', 'Cloudflare R2'],
+    status: 'App Store listing available',
+    scope: 'A native SwiftUI wallpaper application with Firebase and Cloudflare R2-backed content. This case study shows the browsing interface; the App Store link is the destination for the app. Its content services are separate from the other projects.',
+    demo: 'https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126',
+    demoLabel: 'App Store',
+    pricing: {
+      download: 'Free',
+      storefront: 'India App Store',
+      checkedAt: '2026-11-03',
+      source: 'https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126',
+    },
+    landscapeCover: "/static/media/projectcover/glassora-cover.png",
+    portraitCover: "/static/media/projectcover/glassora-cover.png",
+    link: "/glassora"
+  }
+];

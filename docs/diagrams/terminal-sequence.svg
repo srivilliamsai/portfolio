@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="1176" viewBox="0 0 1040 1176" role="img" aria-labelledby="title desc">
+<title id="title">Terminal interaction sequence</title><desc id="desc">A project name sets context; a follow-up reads the same local project.</desc>
+<metadata id="original-mermaid-source">sequenceDiagram
+  actor Visitor
+  participant UI as DevTerminal
+  participant Resolver as getTerminalReply
+  participant Questions as resolveTerminalQuestion
+  participant Data as Local project records
+  Visitor-&gt;&gt;UI: glassora
+  UI-&gt;&gt;Resolver: input and previous project context
+  Resolver-&gt;&gt;Resolver: Resolve exact aliases or bounded spelling match
+  Resolver-&gt;&gt;Questions: No command: resolve informational intent
+  Questions--&gt;&gt;Resolver: Project overview: glassora
+  Resolver-&gt;&gt;Data: Read description, contribution, tools and scope
+  Resolver--&gt;&gt;UI: output and projectId=glassora
+  UI--&gt;&gt;Visitor: Append answer; focus input
+  Visitor-&gt;&gt;UI: its free
+  UI-&gt;&gt;Resolver: input and projectId=glassora
+  Resolver-&gt;&gt;Questions: Resolve follow-up using explicit context
+  Questions--&gt;&gt;Resolver: Pricing topic for glassora
+  Resolver-&gt;&gt;Data: Read dated storefront pricing record
+  Resolver--&gt;&gt;UI: Answer and retained project context
+  UI--&gt;&gt;Visitor: Show qualified pricing and source link</metadata>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect x="1" y="1" width="1038" height="1174" rx="18" fill="#ffffff" stroke="#d3dce8"/>
+<text x="40" y="48" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#15243c" text-anchor="start">Terminal interaction sequence</text>
+<text x="40" y="78" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#485971" text-anchor="start">A project name sets context; a follow-up reads the same local project.</text>
+<path d="M110 216 L110 1108" stroke="#c0ccda" stroke-width="1.5" stroke-dasharray="6 6"/>
+<path d="M380 216 L380 1108" stroke="#c0ccda" stroke-width="1.5" stroke-dasharray="6 6"/>
+<path d="M650 216 L650 1108" stroke="#c0ccda" stroke-width="1.5" stroke-dasharray="6 6"/>
+<path d="M920 216 L920 1108" stroke="#c0ccda" stroke-width="1.5" stroke-dasharray="6 6"/>
+<g data-node="actor-0"><rect x="12" y="112" width="196" height="104" rx="12" fill="#edf4ff" stroke="#bdcbdd" stroke-width="1.5"/>
+<text x="32" y="145" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#15243c" text-anchor="start">Visitor</text>
+</g>
+<g data-node="actor-1"><rect x="282" y="112" width="196" height="104" rx="12" fill="#edf4ff" stroke="#bdcbdd" stroke-width="1.5"/>
+<text x="302" y="145" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#15243c" text-anchor="start">DevTerminal</text>
+<text x="302" y="174" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#485971" text-anchor="start">Browser UI</text>
+</g>
+<g data-node="actor-2"><rect x="552" y="112" width="196" height="104" rx="12" fill="#edf4ff" stroke="#bdcbdd" stroke-width="1.5"/>
+<text x="572" y="145" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#15243c" text-anchor="start">Local resolver</text>
+<text x="572" y="174" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#485971" text-anchor="start">Commands and</text>
+<text x="572" y="199" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#485971" text-anchor="start">question matching</text>
+</g>
+<g data-node="actor-3"><rect x="822" y="112" width="196" height="104" rx="12" fill="#edf4ff" stroke="#bdcbdd" stroke-width="1.5"/>
+<text x="842" y="145" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#15243c" text-anchor="start">Project records</text>
+<text x="842" y="174" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#485971" text-anchor="start">Local data</text>
+</g>
+<path d="M110 272 L380 272" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="201.8" y="244" width="86.4" height="25" rx="4" fill="#ffffff"/>
+<text x="245" y="260" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">glassora</text>
+<path d="M380 340 L650 340" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="436.6" y="291" width="156.8" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="307" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">getTerminalReply</text>
+<rect x="401.4" y="312" width="227.20000000000002" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="328" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">input + previous context</text>
+<rect x="553" y="370" width="194" height="54" rx="8" fill="#edf4ff" stroke="#bdcbdd"/>
+<text x="650" y="393" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Match command /</text>
+<text x="650" y="413" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">informational question</text>
+<path d="M650 470 L920 470" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="680.2" y="442" width="209.60000000000002" height="25" rx="4" fill="#ffffff"/>
+<text x="785" y="458" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Read Glassora overview</text>
+<path d="M920 530 L650 530" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="715.4" y="502" width="139.20000000000002" height="25" rx="4" fill="#ffffff"/>
+<text x="785" y="518" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Project record</text>
+<path d="M650 598 L380 598" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="441" y="549" width="148" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="565" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Overview output</text>
+<rect x="419" y="570" width="192" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="586" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">projectId = glassora</text>
+<path d="M380 660 L110 660" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="179.8" y="632" width="130.4" height="25" rx="4" fill="#ffffff"/>
+<text x="245" y="648" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Show overview</text>
+<path d="M110 730 L380 730" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="201.8" y="702" width="86.4" height="25" rx="4" fill="#ffffff"/>
+<text x="245" y="718" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">its free</text>
+<path d="M380 800 L650 800" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="436.6" y="751" width="156.8" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="767" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Input + retained</text>
+<rect x="401.4" y="772" width="227.20000000000002" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="788" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Glassora project context</text>
+<path d="M650 866 L920 866" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="697.8" y="838" width="174.4" height="25" rx="4" fill="#ffffff"/>
+<text x="785" y="854" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Read dated pricing</text>
+<path d="M920 936 L650 936" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="684.6" y="887" width="200.8" height="25" rx="4" fill="#ffffff"/>
+<text x="785" y="903" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Free download · India</text>
+<rect x="675.8" y="908" width="218.4" height="25" rx="4" fill="#ffffff"/>
+<text x="785" y="924" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Checked 3 November 2026</text>
+<path d="M650 1000 L380 1000" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="436.6" y="951" width="156.8" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="967" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Qualified answer</text>
+<rect x="423.4" y="972" width="183.20000000000002" height="25" rx="4" fill="#ffffff"/>
+<text x="515" y="988" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">and project context</text>
+<path d="M380 1066 L110 1066" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="122.6" y="1038" width="244.8" height="25" rx="4" fill="#ffffff"/>
+<text x="245" y="1054" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#485971" text-anchor="middle">Show price and source link</text>
+<text x="520" y="1140" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#485971" text-anchor="middle">All answer resolution stays inside the browser. No AI service participates.</text>
+</svg>
