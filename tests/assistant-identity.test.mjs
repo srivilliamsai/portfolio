@@ -1,7 +1,7 @@
 import {assistantText} from '../src/services/assistantText.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {displayOwnerName,spokenOwnerName,ownerNameInstruction} from '../src/services/assistantIdentity.js';
+import {displayOwnerName,spokenOwnerName,ownerNameInstruction,ownerSpeechInstruction,liveSpokenContext} from '../src/services/assistantIdentity.js';
 import {localReply,welcome,publicKnowledge,getMediaContext} from '../src/services/assistantKnowledge.js';
 import {personalGallery} from '../src/services/assistantGallery.js';
 import {createBrowserSpeech} from '../src/services/assistantSpeech.js';
@@ -84,4 +84,13 @@ test('Aman says the assistant name as Will while captions retain uppercase WILL'
   assert.doesNotMatch(utterance.text,/\bWILL\b/);
   utterance.onstart();utterance.onboundary({name:'word',charIndex:8});assert.equal(captions.at(-1),"Hi, I'm WILL,");
   utterance.onend();await reply;assert.equal(captions.at(-1),"Hi, I'm WILL, Villiam’s assistant.");speech.dispose();
+});
+
+
+test('Live audio context uses a phonetic first name while the website restores formal capitals',()=>{
+  assert.match(ownerSpeechInstruction,/Shree is one syllable/);
+  for(let repeat=0;repeat<5;repeat++){
+    assert.equal(liveSpokenContext('His full name is SRI VILLIAM SAI.'),'His full name is Shree William Sai.');
+    assert.equal(displayOwnerName('His full name is Shree William Sai.'),'His full name is SRI VILLIAM SAI.');
+  }
 });

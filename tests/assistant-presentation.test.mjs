@@ -30,3 +30,9 @@ test('voice mode never displays a completed transcript before speech captions ar
   assert.equal(tourPresentation({state:'speaking',mode:'voice',partial:'This complete',lastMessage}).text,'This complete');
   assert.equal(tourPresentation({state:'idle',mode:'type',lastMessage}).text,lastMessage.content);
 });
+
+
+test('recognized visitor words remain visible while Live is preparing the answer',()=>{
+  for(const state of ['listening','thinking','idle']){const view=tourPresentation({state,mode:'voice',heard:'Explain Carbon Footprint architecture'});assert.equal(view.isUser,true);assert.equal(view.text,'Explain Carbon Footprint architecture');}
+  const speaking=tourPresentation({state:'speaking',mode:'voice',heard:'Old question',partial:'React connects to the API.'});assert.equal(speaking.isUser,false);assert.equal(speaking.text,'React connects to the API.');
+});

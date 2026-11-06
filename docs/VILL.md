@@ -27,7 +27,7 @@ An externally hosted API requires its exact HTTPS origin in `VITE_ASSISTANT_API_
 ## Questions, context and identity
 
 - Full-name questions return **SRI VILLIAM SAI**, including after a project conversation. Villiam is pronounced William; WILL is pronounced as the single word Will. PitStop uses its canonical display name throughout the current records.
-- Project names, documented purposes and reported transcriptions resolve before generic project lists. Glacier, glycerol, kasora and wallpaper refer to Glassora; tiny desk and daily Des refer to DineDesk; invoice speaker refers to Invoice Picker. An unknown specific name or bare earphone receives one short clarification.
+- Project names, documented purposes and reported transcriptions resolve before generic project lists. Glacier, glycerol, Lasora, Glasura, kasora and wallpaper refer to Glassora; tiny desk and daily Des refer to DineDesk; invoice speaker refers to Invoice Picker. An unknown specific name or bare earphone receives one short clarification.
 - Names-only and count-only requests omit extra descriptions, links and selected cards. The six-project count describes listed work, not six completed products or a lifetime total.
 - Explain-more follow-ups advance through different approved sections and stop when facts are exhausted. Project walkthroughs explain one item at a time and advance on next or continue.
 - Current residence, siblings, unknown usage figures, revenue and unsupported personal reasons are not invented. Location questions do not substitute college, birthplace or current projects. M.Tech remains in progress with expected completion in 2028.
@@ -68,3 +68,13 @@ The canvas face supports listening, speaking, thinking, sleeping, happy and exci
 The suite includes 2,472 distinct local portfolio questions, reported conversation replays, photo/format/context regressions, stream parsing, microphone/queue cleanup and deployment tests. Provider unit tests use injected responses; the packaged SDK is checked against mocked wire responses. The separate public API smoke check verified real Gemini text, WAV speech and Live token creation on 6 November 2026. It did not exercise a physical microphone or complete a browser Live audio session.
 
 Input, history and output are bounded. Origin checks are not authentication; the in-memory request limiter is per Lambda instance and does not enforce a global spending cap. Account quotas and usage monitoring remain necessary operational controls. See [Security](../SECURITY.md), [Testing](TESTING.md) and the [release record](AMPLIFY_RELEASE.md).
+
+## Reported Live transcript fixes — 6 November 2026
+
+Live sessions preload the full public project narratives, achievement sections and approved personal-picture descriptions. This supplies Carbon Footprint architecture and Glassora cloud/native details even when the model skips retrieval. Explicit long answers use the complete documented case study in text mode; factual section and compatibility responses bypass model paraphrasing. Follow-up tool retrieval and automatic image routing share the original turn context so a section is not advanced twice.
+
+Glassora’s App Store snapshot checked 6 November lists version 0.1.6 and compatibility with iOS 16.0+, iPadOS 16.0+, macOS 14.0+ and visionOS 1.0+. This describes store compatibility, not tested device models or install counts. See the [App Store source](https://apps.apple.com/in/app/glassora-wallpapers-hd-4k/id6777764126).
+
+Both Live interim and final speech packets feed visitor captions. Recognized questions remain visible while the answer is being prepared; interim-only packets can become completed transcript questions. Live reference/tool context uses the phonetic Shree William Sai while displayed assistant text restores SRI VILLIAM SAI. The initial speech guide also works with the existing token service, although the packaged backend prompt change requires a CloudFormation update.
+
+Interface sounds retry the visitor’s current control after suspended/interrupted audio resumes, including browsers without the UserActivation API. Page-show and visible-tab events attempt to restore the sound context; browser permission and autoplay rules still apply.

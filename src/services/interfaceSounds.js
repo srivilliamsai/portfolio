@@ -1,5 +1,16 @@
 import {playWillEffect} from './willSounds.js';
 
+// Safari may suspend/interupt audio when returning to a tab. Retry the current
+// deliberate control after resume; do not depend on UserActivation support.
+export function playControlSound(engine,section,kind,now=()=>performance.now()){
+  const played=engine.play(section,kind);
+  if(!played&&kind!=='message'&&!engine.isReady()){
+    const requestedAt=now();
+    void engine.unlock().then(ready=>{if(ready&&now()-requestedAt<1000)engine.play(section,kind);});
+  }
+  return played;
+}
+
 // Audio is scoped to deliberate controls in WILL, contact, cards, and the rotary 404.
 const sectionSounds = new Map([
   ['contact', new Set(['message', 'shuffle', 'send'])],

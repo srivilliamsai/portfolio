@@ -119,7 +119,7 @@ export default function VillTour({onClose}){
     }):null;
     queue.current=playback;
     try{
-      if(capabilities.chat)reply=await streamChat(question,context.current,prior,{signal:controller.signal,onDelta:text=>{if(!mounted.current||controller.signal.aborted)return;if(playback&&!playback.cancelled)playback.update(text);else setPartial(text);}});
+      if(capabilities.chat&&!reply.answerFormat&&!reply.needsClarification&&!reply.answerUnavailable)reply=await streamChat(question,context.current,prior,{signal:controller.signal,onDelta:text=>{if(!mounted.current||controller.signal.aborted)return;if(playback&&!playback.cancelled)playback.update(text);else setPartial(text);}});
     }catch(err){
       if(controller.signal.aborted||!mounted.current)return;
       if(playback?.hasText){reply={text:playback.text};setError('The connection paused. You can ask me to continue.');}

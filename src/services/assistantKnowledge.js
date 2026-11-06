@@ -21,12 +21,14 @@ import {backgroundExperience} from '../data/assistantProfile.js';
 import {requestReply} from './assistantRequests.js';
 import {musicReply} from './assistantMusic.js';
 import {assistantMusic} from '../data/assistantMusic.js';
+import {projectAvailability,availabilityText} from '../data/projectAvailability.js';
 export {normalize} from './assistantQuery.js';
 
 export const welcome = displayOwnerName("Hi, I'm WILL! What would you like to know about Villiam?");
 const mediaFor = id => assistantMedia.filter(m => m.entityId === id && !m.placeholder).map(m => m.id);
 const projectAliases = { pitstop:['pit stop','roadside','fuel'], 'carbon-footprint':['carbon footprint','carbon','sustainability','emissions'], wyndra:['weather','ios weather'], glassora:['wallpaper','wallpapers'] };
 export const knowledgeRecords = [
+  ...Object.entries(projectAvailability).map(([id,value])=>({id:`${id}-availability`,title:`${id} compatibility and version`,aliases:[`${id} compatibility`,`${id} targeted version`,`${id} platforms`],text:availabilityText(value),links:[{label:'App Store compatibility and version',href:value.source}],mediaIds:mediaFor(id)})),
   {id:'music',title:'Music selection',aliases:['songs','music','spotify','playlist',...assistantMusic.map(item=>item.title)],text:`Music selected for this portfolio: ${assistantMusic.map(item=>item.title).join(', ')}. Listening history and personal stories behind these tracks are not supplied.`,links:[],mediaIds:assistantMusic.map(item=>item.id)},
   ...conversationRecords,
   ...profileRecords,

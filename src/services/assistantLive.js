@@ -1,9 +1,10 @@
-import {displayOwnerName,ownerNameInstruction} from './assistantIdentity.js';
+import {displayOwnerName,ownerSpeechInstruction,liveSpokenContext} from './assistantIdentity.js';
 import { getMediaContext, searchKnowledge, localReply } from './assistantKnowledge.js';
 import { assistantApiPath } from './assistantApi.js';
 import { transcriptForProvider } from './assistantSession.js';
 import {mergeAssistantContext} from './assistantContext.js';
 import {createAudioCaptions} from './assistantCaptions.js';
+import {livePortfolioContext} from './assistantLiveContext.js';
 
 const base64=buffer=>{const bytes=new Uint8Array(buffer);let text='';for(let i=0;i<bytes.length;i++)text+=String.fromCharCode(bytes[i]);return btoa(text);};
 export function resolveLiveTool(name,args={}, {question='',context={},onMedia=()=>{}}={}) {
@@ -15,7 +16,7 @@ export function resolveLiveTool(name,args={}, {question='',context={},onMedia=()
   };
   if(name==='search_portfolio'){
     const answer=reply();
-    return {result:{answer,records:searchKnowledge(query)},context:answer.clearMedia||answer.mediaId?present(answer):mergeAssistantContext(context,answer)};
+    return {result:{answer,records:searchKnowledge(query),presentation:answer.answerFormat==='detailed'?'The visitor requested a long explanation. Use the complete approved answer text, keeping every section and its limits; do not shorten it to a summary.':answer.answerFormat==='source-facts'?'Answer directly with these documented facts; do not claim they are unspecified.':'Respect the visitor’s requested format.'},context:answer.clearMedia||answer.mediaId?present(answer):mergeAssistantContext(context,answer)};
   }
   if(name==='get_media')return {result:getMediaContext(args.id)||{error:'Not found'},context};
   if(name==='show_media'){
@@ -34,22 +35,24 @@ async function liveClient(credentials){const {GoogleGenAI}=await import('@google
 export async function connectLive({messages=[],selectedMediaId=null,context:initialContext={},signal,onState,onUser,onText,onTurn,onMedia,onError,onInterrupt=()=>{},onLevel=()=>{},createClient=liveClient}) {
   let closed=false,session=null,micStream=null,micContext=null,worklet=null,micNode=null,sink=null,output=null,analyser=null,gain=null,frame=0,sequence=0,user='',answer='',muted=false;
   let conversation=mergeAssistantContext(initialContext,{mediaId:selectedMediaId});
-  let responseStarted=false,routedQuestion='',turnContext=null,hasOutputTranscript=false;
+  let responseStarted=false,routedQuestion='',turnContext=null,hasOutputTranscript=false,interimUser='',waitingForTool=false,hasAudioOutput=false;
+  const currentQuestion=()=>interimUser.startsWith(user)?interimUser:user+interimUser;
   const presentQuestion=()=>{
-    if(!user.trim()||user===routedQuestion)return;
+    const question=currentQuestion();
+    if(!question.trim()||question===routedQuestion)return;
     turnContext??=conversation;
-    const reply=localReply(user,turnContext),actual=onMedia(reply.clearMedia?null:reply.mediaId,reply);
+    const reply=localReply(question,turnContext),actual=onMedia(reply.clearMedia?null:reply.mediaId,reply);
     conversation=mergeAssistantContext(turnContext,actual===undefined?reply:{...reply,mediaId:actual,clearMedia:false});
-    routedQuestion=user;
+    routedQuestion=question;
   };
-  const resetTurn=()=>{responseStarted=false;routedQuestion='';turnContext=null;hasOutputTranscript=false;};
+  const resetTurn=()=>{responseStarted=false;routedQuestion='';turnContext=null;hasOutputTranscript=false;interimUser='';waitingForTool=false;hasAudioOutput=false;};
   const sources=new Set();let cursor=0,turnEnded=false,suppressAudio=false;
   const captions=createAudioCaptions({clock:()=>output?.currentTime||0,onCaption:value=>onText(displayOwnerName(value))});
   const stopAudio=()=>{for(const source of sources){source.onended=null;try{source.stop();}catch{}}sources.clear();cursor=0;captions.reset();onLevel(0);};
   const stopMic=()=>{if(worklet)worklet.port.onmessage=null;worklet?.disconnect();micNode?.disconnect();sink?.disconnect();micStream?.getTracks().forEach(t=>t.stop());micStream=null;void micContext?.close().catch(()=>{});micContext=null;};
   const close=()=>{if(closed)return;closed=true;sequence++;stopMic();stopAudio();session?.close();cancelAnimationFrame(frame);void output?.close().catch(()=>{});signal?.removeEventListener('abort',close);};
   signal?.addEventListener('abort',close,{once:true});
-  const finish=()=>{if(!closed&&turnEnded&&!sources.size){captions.finish();if(user||answer)onTurn({user,assistant:displayOwnerName(answer)});user='';answer='';turnEnded=false;resetTurn();onState(micStream?'listening':'idle');}};
+  const finish=()=>{if(!closed&&turnEnded&&!sources.size&&answer.trim()){captions.finish();onTurn({user:currentQuestion(),assistant:displayOwnerName(answer)});user='';answer='';turnEnded=false;resetTurn();onState(micStream?'listening':'idle');}};
   async function startMic(){if(closed)return;stopMic();const generation=++sequence;const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}});if(closed||generation!==sequence){stream.getTracks().forEach(t=>t.stop());return;}micStream=stream;micContext=new AudioContext();await micContext.audioWorklet.addModule('/static/worklets/vill-mic.js');if(closed||generation!==sequence)return;worklet=new AudioWorkletNode(micContext,'vill-mic');micNode=micContext.createMediaStreamSource(stream);sink=micContext.createGain();sink.gain.value=0;micNode.connect(worklet);worklet.connect(sink);sink.connect(micContext.destination);worklet.port.onmessage=e=>{if(!closed)session.sendRealtimeInput({audio:{data:base64(e.data),mimeType:'audio/pcm;rate=16000'}});};onState('listening');}
   try {
     onState('connecting');
@@ -62,37 +65,44 @@ export async function connectLive({messages=[],selectedMediaId=null,context:init
     if(closed||signal?.aborted)throw new DOMException('Cancelled','AbortError');
     gain=output.createGain();analyser=output.createAnalyser();gain.connect(analyser);analyser.connect(output.destination);analyser.fftSize=256;
     const bytes=new Uint8Array(analyser.fftSize);const animate=()=>{if(closed)return;captions.tick();analyser.getByteTimeDomainData(bytes);onLevel(Math.min(1,Math.sqrt(bytes.reduce((sum,v)=>sum+((v-128)/128)**2,0)/bytes.length)*4));frame=requestAnimationFrame(animate);};animate();
-    session=await ai.live.connect({model:credentials.model,config:{responseModalities:['AUDIO'],inputAudioTranscription:{},outputAudioTranscription:{},speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:credentials.voice}}}},callbacks:{
+    session=await ai.live.connect({model:credentials.model,config:{responseModalities:['AUDIO'],maxOutputTokens:8192,inputAudioTranscription:{},outputAudioTranscription:{},speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:credentials.voice}}}},callbacks:{
       onmessage:message=>{
         if(closed)return;
-        if(message.toolCall){const functionResponses=message.toolCall.functionCalls.map(call=>{const resolved=resolveLiveTool(call.name,call.args,{question:user,context:conversation,onMedia});conversation=resolved.context;return {id:call.id,name:call.name,response:{result:resolved.result}};});session.sendToolResponse({functionResponses});}
+        if(message.toolCall){waitingForTool=true;turnEnded=false;if(currentQuestion().trim())turnContext??=conversation;const functionResponses=message.toolCall.functionCalls.map(call=>{const resolved=resolveLiveTool(call.name,call.args,{question:currentQuestion(),context:turnContext||conversation,onMedia});conversation=resolved.context;return {id:call.id,name:call.name,response:{result:JSON.parse(liveSpokenContext(JSON.stringify(resolved.result)))}};});session.sendToolResponse({functionResponses});}
         const content=message.serverContent;if(!content)return;
         if(content.interrupted){stopAudio();suppressAudio=false;user='';answer='';turnEnded=false;resetTurn();onInterrupt();onText('');onState('listening');}
-        if(content.inputTranscription?.text){suppressAudio=false;user+=content.inputTranscription.text;onUser(user);if(responseStarted)presentQuestion();}
+        if(content.interimInputTranscription?.text){interimUser=content.interimInputTranscription.text;onUser(currentQuestion());if(responseStarted)presentQuestion();}
+        if(content.inputTranscription?.text){suppressAudio=false;user+=content.inputTranscription.text;interimUser='';onUser(user);if(responseStarted)presentQuestion();}
         const parts=content.modelTurn?.parts||[];
-        if(!suppressAudio&&(parts.length||content.outputTranscription?.text)){
+        if(!suppressAudio&&(parts.some(part=>part.inlineData||!part.thought&&part.text)||content.outputTranscription?.text)){
+          if(!message.toolCall)waitingForTool=false;
           responseStarted=true;presentQuestion();
         }
         for(const part of content.modelTurn?.parts||[]){if(suppressAudio||!part.inlineData?.mimeType?.startsWith('audio/'))continue;const raw=atob(part.inlineData.data),array=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)array[i]=raw.charCodeAt(i);const pcm=new Int16Array(array.buffer),buffer=output.createBuffer(1,pcm.length,24000),channel=buffer.getChannelData(0);for(let i=0;i<pcm.length;i++)channel[i]=pcm[i]/32768;const source=output.createBufferSource();source.buffer=buffer;source.connect(gain);cursor=Math.max(cursor,output.currentTime+.02);sources.add(source);source.start(cursor);captions.start(cursor);cursor+=buffer.duration;onState('speaking');source.onended=()=>{sources.delete(source);finish();};}
+        if(parts.some(part=>part.inlineData?.mimeType?.startsWith('audio/')))hasAudioOutput=true;
         if(content.outputTranscription?.text&&!suppressAudio){hasOutputTranscript=true;answer+=content.outputTranscription.text;captions.append(content.outputTranscription.text);if(!sources.size)onText(displayOwnerName(answer));}
         else if(!hasOutputTranscript&&!suppressAudio){
           const text=parts.filter(part=>!part.thought&&typeof part.text==='string').map(part=>part.text).join('');
           if(text){answer+=text;captions.append(text);if(!sources.size)onText(displayOwnerName(answer));}
         }
         if(content.generationComplete&&!sources.size&&!content.outputTranscription?.text)onState('thinking');
-        if(content.turnComplete){turnEnded=true;finish();}
+        // Function-call turns and final ASR packets can precede spoken output.
+        // Keep the visitor question until a real answer has finished.
+        if(content.turnComplete&&!waitingForTool)turnEnded=Boolean(answer.trim()||hasAudioOutput);
+        finish();
       },
       onerror:()=>{if(!closed)onError('Voice connection interrupted. You can continue by typing.');close();},
       onclose:()=>{if(!closed){onState('idle');onError('Voice session ended. Start voice again to reconnect.');}close();}
     }});
     if(closed||signal?.aborted){session.close();throw new DOMException('Cancelled','AbortError');}
-    session.sendClientContent({turns:[{role:'user',parts:[{text:'Session pronunciation guide, not a request for an answer: '+ownerNameInstruction}]}],turnComplete:false});
-    if(selectedMediaId){const media=getMediaContext(selectedMediaId);if(media)session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+JSON.stringify(media)}]}],turnComplete:false});}
+    session.sendClientContent({turns:[{role:'user',parts:[{text:'Session pronunciation guide, not a request for an answer: '+ownerSpeechInstruction}]}],turnComplete:false});
+    session.sendClientContent({turns:[{role:'user',parts:[{text:livePortfolioContext()}]}],turnComplete:false});
+    if(selectedMediaId){const media=getMediaContext(selectedMediaId);if(media)session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+liveSpokenContext(JSON.stringify(media))}]}],turnComplete:false});}
     await startMic();
     if(!messages.length)session.sendClientContent({turns:[{role:'user',parts:[{text:'A visitor has chosen to start the voice tour. Greet them as Will, pronounced as one word and never as individual letters, in one short sentence and ask what they would like to know about Villiam.'}]}],turnComplete:true});
     return {
-      sendText(text){stopAudio();resetTurn();suppressAudio=false;user=text;answer='';turnEnded=false;onUser(text);onText('');onState('thinking');session.sendClientContent({turns:[{role:'user',parts:[{text}]}],turnComplete:true});},
-      setMedia(id){const media=getMediaContext(id);conversation=mergeAssistantContext(conversation,{mediaId:id});session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+JSON.stringify(media||{selected:false})}]}],turnComplete:false});},
+      sendText(text){stopAudio();resetTurn();suppressAudio=false;user=text;answer='';turnEnded=false;onUser(text);onText('');onState('thinking');const approved=localReply(text,conversation);const source=liveSpokenContext('Approved public source answer for this visitor question: '+approved.text+(approved.answerFormat==='detailed'?' The visitor requested a long answer. Read this complete source explanation, including all sections, without shortening it.':''));session.sendClientContent({turns:[{role:'user',parts:[{text},{text:source}]}],turnComplete:true});},
+      setMedia(id){const media=getMediaContext(id);conversation=mergeAssistantContext(conversation,{mediaId:id});session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+liveSpokenContext(JSON.stringify(media||{selected:false}))}]}],turnComplete:false});},
       setMic:async enabled=>{if(enabled)await startMic();else{sequence++;stopMic();onState('idle');}},
       setMuted(value){muted=value;if(gain)gain.gain.value=muted?0:1;},
       stopTalking(){suppressAudio=true;stopAudio();onState(micStream?'listening':'idle');},close

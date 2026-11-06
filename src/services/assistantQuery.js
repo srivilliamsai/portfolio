@@ -12,7 +12,7 @@ export const projectQueryAliases={
   pitstop:['pitstop','pit stop','it stop','roadside assistance','roadside app'],
   'carbon-footprint':['carbon footprint','carbon','sustainability project','emissions tracker'],
   wyndra:['wyndra','wyndra weather','weather app','weather project','weather application','van drop','wyendra','w y n d r a','w y e n d r a'],
-  glassora:['glassora','glass sora','kasora','black sora','glacier','glycerol','wallpaper','wallpapers'],
+  glassora:['glassora','glass sora','lasora','glasura','glasora','kasora','black sora','glacier','glycerol','wallpaper','wallpapers'],
   dinedesk:['dinedesk','dine desk','tiny desk','daily des','restaurant pos','restaurant operations','restaurant billing'],
   'invoice-picker':['invoice picker','invoicepicker','invoice speaker','invoicing app','invoice project','freelancer invoicing'],
 };

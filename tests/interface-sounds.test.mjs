@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSoundEngine } from '../src/services/interfaceSounds.js';
+import { createSoundEngine, playControlSound } from '../src/services/interfaceSounds.js';
 
 function harness({ loadMessage } = {}) {
   let created = 0, resumed = 0, time = 0;
@@ -136,4 +136,23 @@ test('WILL and contact send effects have independent cooldowns',async()=>{
   assert.equal(h.engine.play('contact','send'),true);assert.equal(h.engine.play('will','send'),true);
   assert.equal(h.engine.play('will','send'),false);
   assert.deepEqual(h.tones.slice(-3).map(t=>t.hz),[1046,784,1318]);
+});
+
+test('the first deliberate sound resumes after repeated suspended or Safari interrupted revisits',async()=>{
+  const h=harness();h.engine.setEnabled(true);await h.engine.unlock();
+  for(let revisit=0;revisit<5;revisit++)for(const state of ['suspended','interrupted']){
+    h.context.state=state;h.advance(400);const before=h.tones.length;
+    assert.equal(playControlSound(h.engine,'will','select',()=>0),false);
+    await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(h.context.state,'running');assert.equal(h.tones.length,before+2);
+  }
+  assert.equal(h.resumed(),10);
+});
+
+test('resuming a control does not replay stale sounds or bypass section mute',async()=>{
+  const h=harness();h.engine.setEnabled(true);await h.engine.unlock();
+  h.context.state='suspended';let now=0;playControlSound(h.engine,'will','open',()=>now);now=1500;
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(h.tones.length,0);
+  h.context.state='interrupted';h.engine.setSectionMuted('will',true);playControlSound(h.engine,'will','select',()=>0);
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(h.tones.length,0);
 });

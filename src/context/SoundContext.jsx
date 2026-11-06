@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef } from 'react';
-import { createSoundEngine } from '../services/interfaceSounds';
+import { createSoundEngine, playControlSound } from '../services/interfaceSounds';
 
 const SoundContext = createContext({ playSound() { return false; } });
 export function SoundProvider({ children }) {
@@ -14,28 +14,22 @@ export function SoundProvider({ children }) {
       return response.ok ? response.arrayBuffer() : null;
     },
   });
-  const playSound = useCallback((section, kind) => {
-    const played = engine.current.play(section, kind);
-    if (!played && kind !== 'message' && !engine.current.isReady() && navigator.userActivation?.isActive) {
-      const requestedAt = performance.now();
-      void engine.current.unlock().then((ready) => {
-        if (ready && performance.now() - requestedAt < 250) {
-          engine.current.play(section, kind);
-        }
-      });
-    }
-    return played;
-  }, []);
+  const playSound = useCallback((section, kind) => playControlSound(engine.current,section,kind), []);
   const setSectionMuted = useCallback((section,value) => engine.current.setSectionMuted(section,value), []);
   useEffect(() => {
     engine.current.setEnabled(true);
     const unlock = () => { void engine.current.unlock(); };
+    const restore = () => { if(document.visibilityState!=='hidden')unlock(); };
     unlock();
     document.addEventListener('pointerdown', unlock, true);
     document.addEventListener('keydown', unlock, true);
+    document.addEventListener('visibilitychange', restore);
+    window.addEventListener('pageshow', restore);
     return () => {
       document.removeEventListener('pointerdown', unlock, true);
       document.removeEventListener('keydown', unlock, true);
+      document.removeEventListener('visibilitychange', restore);
+      window.removeEventListener('pageshow', restore);
       engine.current.dispose();
     };
   }, []);
