@@ -11,6 +11,12 @@ import {achievements} from '../src/data/achievements.js';
 import {certificates} from '../src/data/certificates.js';
 import {workGallery,personalGallery} from '../src/services/assistantGallery.js';
 
+test('provider media-display markers never leak into visible or spoken portfolio answers',()=>{
+  assert.equal(assistantText('PitStop helps drivers. [Show project:pitstop:pitstop-one] More details.'),'PitStop helps drivers.  More details.');
+  assert.equal(assistantText('[Show image personal:formula-one] Formula 1.'),'Formula 1.');
+  assert.equal(assistantText('Use the [case study](/pitstop).'),'Use the case study.');
+});
+
 test('all current projects, achievements and certificates are available to WILL',()=>{
   for(const p of projects)assert.ok(knowledgeRecords.find(r=>r.id===p.id));
   for(const a of achievements)assert.ok(knowledgeRecords.find(r=>r.id===a.slug));
