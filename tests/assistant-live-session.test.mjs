@@ -27,19 +27,20 @@ async function setup(t){
   replace('cancelAnimationFrame',id=>frames.delete(id));
   t.mock.method(globalThis,'fetch',async()=>({ok:true,json:async()=>({token:'synthetic-ephemeral-token',model:'gemini-3.8-live',voice:'Algieba'})}));
   const selected=createMediaSelection(),shown=[],heard=[],turns=[],states=[],errors=[];let open=false,token;
-  const session={sendClientContent(){},sendRealtimeInput(){},sendToolResponse(){},close(){}};
+  const sent=[];const session={sendClientContent(value){sent.push(value);},sendRealtimeInput(){},sendToolResponse(){},close(){}};
   connection=await connectLive({
     messages:[{role:'assistant',content:'Welcome'}],onState:state=>states.push(state),onUser:text=>{if(!open){token=selected.beginTurn();open=true;}heard.push(text);},onText:text=>shown.push(text),
     onTurn:turn=>{turns.push(turn);open=false;},onMedia:(_id,reply)=>selected.apply(reply,token),onError:error=>errors.push(error),onInterrupt:()=>{selected.invalidate();open=false;},
     createClient:async()=>({live:{connect:async value=>{options=value;return session;}}})
   });
-  return {connection,options,selected,shown,heard,turns,states,errors,get stopped(){return stopped;},message:serverContent=>options.callbacks.onmessage({serverContent}),tool:call=>options.callbacks.onmessage({toolCall:{functionCalls:[call]}}),tick:()=>{audio[0].currentTime+=10;for(const callback of [...frames.values()])callback();},endAudio:()=>audio[0].source?.onended?.()};
+  return {connection,options,selected,shown,heard,turns,states,errors,sent,get stopped(){return stopped;},message:serverContent=>options.callbacks.onmessage({serverContent}),tool:call=>options.callbacks.onmessage({toolCall:{functionCalls:[call]}}),tick:()=>{audio[0].currentTime+=10;for(const callback of [...frames.values()])callback();},endAudio:()=>audio[0].source?.onended?.()};
 }
 const pcm={inlineData:{mimeType:'audio/pcm;rate=24000',data:'AQACAA=='}};
 
 test('Live requests input/output transcripts and selects every named project without a model tool call',async t=>{
   const live=await setup(t);
   assert.deepEqual(live.options.config.inputAudioTranscription,{});assert.deepEqual(live.options.config.outputAudioTranscription,{});
+  assert.equal(live.sent[0].turnComplete,false);assert.match(live.sent[0].turns[0].parts[0].text,/Sri is one spoken word/);
   for(const project of projects){
     live.message({inputTranscription:{text:`Tell me about ${project.title}`}});
     live.message({modelTurn:{parts:[pcm]},outputTranscription:{text:`${project.title} is a portfolio project.`}});

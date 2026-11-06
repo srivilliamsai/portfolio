@@ -1,6 +1,6 @@
 // The owner writes Villiam and pronounces it William. WILL is the assistant.
 export const ownerName=Object.freeze({written:'Villiam',full:'SRI VILLIAM SAI',spoken:'William',spokenFull:'Sri William Sai'});
-export const ownerNameInstruction='Refer to the portfolio owner as Villiam in everyday replies. In written replies and transcriptions spell his short name Villiam. Full-name replies must show SRI VILLIAM SAI in capitals, including SRI; use Sri only within that formal full name. Pronounce Villiam exactly like the English name William, including in full names; pronounce the full name Sri William Sai. Keep the assistant name WILL in written replies. Pronounce WILL as the single English word Will, rhyming with hill; never spell its individual letters. Accept Sri, Villiam and William in visitor questions as aliases for the same portfolio owner.';
+export const ownerNameInstruction='Refer to the portfolio owner as Villiam in everyday replies. In written replies and transcriptions spell his short name Villiam. Full-name replies must show SRI VILLIAM SAI in capitals, including SRI; use Sri only within that formal full name. Pronounce Villiam exactly like the English name William, including in full names; pronounce the full name Sri William Sai. Sri is one spoken word, pronounced shree; never read SRI as the letters S, R, I or spell out any part of the full name. The capital letters are a writing style, not initials. Keep the assistant name WILL in written replies. Pronounce WILL as the single English word Will, rhyming with hill; never spell its individual letters. Accept Sri, Villiam and William in visitor questions as aliases for the same portfolio owner.';
 
 export function displayOwnerName(value) {
   // Protect literal URLs and code: changing a name must not break an address.
@@ -13,7 +13,7 @@ export function displayOwnerName(value) {
 }
 export function spokenOwnerName(value) {
   // Name substitutions preserve length: Villiam/William and WILL/Will keep caption boundaries aligned.
-  return displayOwnerName(value).replace(/\bSRI VILLIAM SAI\b/g,ownerName.spokenFull).replace(/\bVilliam\b/g,ownerName.spoken).replace(/\bWILL\b/g,'Will');
+  return displayOwnerName(value).replace(/\bSRI VILLIAM SAI\b/g,ownerName.spokenFull).replace(/\bSRI\b/g,'Sri').replace(/\bVilliam\b/g,ownerName.spoken).replace(/\bWILL\b/g,'Will');
 }
 export function withOwnerName(record) {
   const result={...record};

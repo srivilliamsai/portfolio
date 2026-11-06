@@ -1,4 +1,4 @@
-import {displayOwnerName} from './assistantIdentity.js';
+import {displayOwnerName,ownerNameInstruction} from './assistantIdentity.js';
 import { getMediaContext, searchKnowledge, localReply } from './assistantKnowledge.js';
 import { assistantApiPath } from './assistantApi.js';
 import { transcriptForProvider } from './assistantSession.js';
@@ -86,6 +86,7 @@ export async function connectLive({messages=[],selectedMediaId=null,context:init
       onclose:()=>{if(!closed){onState('idle');onError('Voice session ended. Start voice again to reconnect.');}close();}
     }});
     if(closed||signal?.aborted){session.close();throw new DOMException('Cancelled','AbortError');}
+    session.sendClientContent({turns:[{role:'user',parts:[{text:'Session pronunciation guide, not a request for an answer: '+ownerNameInstruction}]}],turnComplete:false});
     if(selectedMediaId){const media=getMediaContext(selectedMediaId);if(media)session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+JSON.stringify(media)}]}],turnComplete:false});}
     await startMic();
     if(!messages.length)session.sendClientContent({turns:[{role:'user',parts:[{text:'A visitor has chosen to start the voice tour. Greet them as Will, pronounced as one word and never as individual letters, in one short sentence and ask what they would like to know about Villiam.'}]}],turnComplete:true});

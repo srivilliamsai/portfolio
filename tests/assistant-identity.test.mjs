@@ -1,7 +1,7 @@
 import {assistantText} from '../src/services/assistantText.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {displayOwnerName,spokenOwnerName} from '../src/services/assistantIdentity.js';
+import {displayOwnerName,spokenOwnerName,ownerNameInstruction} from '../src/services/assistantIdentity.js';
 import {localReply,welcome,publicKnowledge,getMediaContext} from '../src/services/assistantKnowledge.js';
 import {personalGallery} from '../src/services/assistantGallery.js';
 import {createBrowserSpeech} from '../src/services/assistantSpeech.js';
@@ -13,6 +13,16 @@ test('WILL writes the preferred name while preserving links, code, identifiers a
   const literal='WILL https://example.test/Sri https://example.test/William mailto:srivilliamsai@gmail.com `Sri` Srinivasan';
   assert.equal(displayOwnerName(literal),literal);
   assert.equal(spokenOwnerName('WILL introduces Villiam Sai.'),'Will introduces Sri William Sai.');
+});
+test('formal capitals never turn Sri or the full owner name into spoken initials',()=>{
+  for(let repeat=0;repeat<5;repeat++){
+    assert.equal(spokenOwnerName('SRI'),'Sri');
+    assert.equal(spokenOwnerName('SRI VILLIAM SAI'),'Sri William Sai');
+    assert.equal(spokenOwnerName('His full name is SRI VILLIAM SAI.'),'His full name is Sri William Sai.');
+    assert.equal(displayOwnerName('Sri William Sai'),'SRI VILLIAM SAI');
+    assert.equal(spokenOwnerName('SRI VILLIAM SAI').length,'SRI VILLIAM SAI'.length);
+  }
+  assert.match(ownerNameInstruction,/Sri is one spoken word/);assert.match(ownerNameInstruction,/never read SRI as the letters/);
 });
 test('all supported owner-name spellings resolve to the same person without changing the assistant identity',()=>{
   for(const name of ['Sri','Villiam','Villiam Sai','William','William Sai']){
