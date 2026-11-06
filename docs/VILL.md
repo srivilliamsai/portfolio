@@ -33,6 +33,8 @@ An externally hosted API requires its exact HTTPS origin in `VITE_ASSISTANT_API_
 - Current residence, siblings, unknown usage figures, revenue and unsupported personal reasons are not invented. Location questions do not substitute college, birthplace or current projects. M.Tech remains in progress with expected completion in 2028.
 - F1 case-study questions use the attributed analysis narrative; the racing-car image represents the owner's interest in watching Formula 1. Naruto fandom and MongoDB.local attendance are confirmed; event city/date and favourite anime character are unspecified.
 
+Live explicitly requests input and output transcription. At response start, the recognized question chooses the approved project image even when the model never calls a media tool. Late input transcription can still select the correct image, and manual changes remain protected. In-progress user speech also appears in the transcript.
+
 Typed Gemini requests receive selected records and bounded recent messages. Strict factual formats and unknown information retain deterministic local replies. Live receives approved facts and constrained retrieval/media tools. Questions and conversation history remain untrusted input, not new biography.
 
 ## Gallery and media

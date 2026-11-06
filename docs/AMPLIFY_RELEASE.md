@@ -53,3 +53,9 @@ Never use `VITE_GEMINI_API_KEY`: all `VITE_*` values become browser-visible. Kee
 - [AWS build settings and automatic builds](https://docs.aws.amazon.com/amplify/latest/userguide/edit-build-settings.html)
 - [AWS SPA and reverse-proxy rewrites](https://docs.aws.amazon.com/amplify/latest/userguide/redirect-rewrite-examples.html)
 - [Vite public build-time variables](https://vite.dev/guide/env-and-mode)
+
+## Live image and caption follow-up
+
+The owner reported that named project questions in Live voice did not consistently open their images and speech text could be absent. The frontend now explicitly requests input/output audio transcription, routes the recognized question through approved media selection at answer start without requiring a model tool call, and displays in-progress user text in the transcript. Text-only model parts also remain visible. The follow-up suite passes 269 tests. Four session regressions exercise all six projects, late transcription ordering, manual selection, project lists, interruption and caption output. These use simulated audio/provider events, not a physical-device microphone recording.
+
+The preceding release e4a1957 passed all three platform checks and GitHub Production verification. Public response headers now allow the microphone and Spotify; the prior blocked-header observation above is historical. See [submission draft](SUBMISSION.md) for the Builder Center write-up and screenshot plan.

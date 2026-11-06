@@ -30,16 +30,26 @@ export function resolveLiveTool(name,args={}, {question='',context={},onMedia=()
   }
   return {result:{error:'Unknown tool'},context};
 }
-export async function connectLive({messages=[],selectedMediaId=null,context:initialContext={},signal,onState,onUser,onText,onTurn,onMedia,onError,onInterrupt=()=>{},onLevel=()=>{}}) {
+async function liveClient(credentials){const {GoogleGenAI}=await import('@google/genai');return new GoogleGenAI({apiKey:credentials.token,httpOptions:{apiVersion:'v1beta'}});}
+export async function connectLive({messages=[],selectedMediaId=null,context:initialContext={},signal,onState,onUser,onText,onTurn,onMedia,onError,onInterrupt=()=>{},onLevel=()=>{},createClient=liveClient}) {
   let closed=false,session=null,micStream=null,micContext=null,worklet=null,micNode=null,sink=null,output=null,analyser=null,gain=null,frame=0,sequence=0,user='',answer='',muted=false;
   let conversation=mergeAssistantContext(initialContext,{mediaId:selectedMediaId});
+  let responseStarted=false,routedQuestion='',turnContext=null,hasOutputTranscript=false;
+  const presentQuestion=()=>{
+    if(!user.trim()||user===routedQuestion)return;
+    turnContext??=conversation;
+    const reply=localReply(user,turnContext),actual=onMedia(reply.clearMedia?null:reply.mediaId,reply);
+    conversation=mergeAssistantContext(turnContext,actual===undefined?reply:{...reply,mediaId:actual,clearMedia:false});
+    routedQuestion=user;
+  };
+  const resetTurn=()=>{responseStarted=false;routedQuestion='';turnContext=null;hasOutputTranscript=false;};
   const sources=new Set();let cursor=0,turnEnded=false,suppressAudio=false;
   const captions=createAudioCaptions({clock:()=>output?.currentTime||0,onCaption:value=>onText(displayOwnerName(value))});
   const stopAudio=()=>{for(const source of sources){source.onended=null;try{source.stop();}catch{}}sources.clear();cursor=0;captions.reset();onLevel(0);};
   const stopMic=()=>{if(worklet)worklet.port.onmessage=null;worklet?.disconnect();micNode?.disconnect();sink?.disconnect();micStream?.getTracks().forEach(t=>t.stop());micStream=null;void micContext?.close().catch(()=>{});micContext=null;};
   const close=()=>{if(closed)return;closed=true;sequence++;stopMic();stopAudio();session?.close();cancelAnimationFrame(frame);void output?.close().catch(()=>{});signal?.removeEventListener('abort',close);};
   signal?.addEventListener('abort',close,{once:true});
-  const finish=()=>{if(!closed&&turnEnded&&!sources.size&&answer){captions.finish();onTurn({user,assistant:displayOwnerName(answer)});user='';answer='';turnEnded=false;onState(micStream?'listening':'idle');}};
+  const finish=()=>{if(!closed&&turnEnded&&!sources.size){captions.finish();if(user||answer)onTurn({user,assistant:displayOwnerName(answer)});user='';answer='';turnEnded=false;resetTurn();onState(micStream?'listening':'idle');}};
   async function startMic(){if(closed)return;stopMic();const generation=++sequence;const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}});if(closed||generation!==sequence){stream.getTracks().forEach(t=>t.stop());return;}micStream=stream;micContext=new AudioContext();await micContext.audioWorklet.addModule('/static/worklets/vill-mic.js');if(closed||generation!==sequence)return;worklet=new AudioWorkletNode(micContext,'vill-mic');micNode=micContext.createMediaStreamSource(stream);sink=micContext.createGain();sink.gain.value=0;micNode.connect(worklet);worklet.connect(sink);sink.connect(micContext.destination);worklet.port.onmessage=e=>{if(!closed)session.sendRealtimeInput({audio:{data:base64(e.data),mimeType:'audio/pcm;rate=16000'}});};onState('listening');}
   try {
     onState('connecting');
@@ -48,20 +58,27 @@ export async function connectLive({messages=[],selectedMediaId=null,context:init
     const response=await fetch(assistantApiPath('/live-session'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:transcriptForProvider(messages)}),signal});
     if(!response.ok)throw new Error('Live voice is unavailable. You can type or use browser voice.');
     const credentials=await response.json();
-    const {GoogleGenAI,Modality}=await import('@google/genai');
+    const ai=await createClient(credentials);
     if(closed||signal?.aborted)throw new DOMException('Cancelled','AbortError');
     gain=output.createGain();analyser=output.createAnalyser();gain.connect(analyser);analyser.connect(output.destination);analyser.fftSize=256;
     const bytes=new Uint8Array(analyser.fftSize);const animate=()=>{if(closed)return;captions.tick();analyser.getByteTimeDomainData(bytes);onLevel(Math.min(1,Math.sqrt(bytes.reduce((sum,v)=>sum+((v-128)/128)**2,0)/bytes.length)*4));frame=requestAnimationFrame(animate);};animate();
-    const ai=new GoogleGenAI({apiKey:credentials.token,httpOptions:{apiVersion:'v1beta'}});
-    session=await ai.live.connect({model:credentials.model,config:{responseModalities:[Modality.AUDIO],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:credentials.voice}}}},callbacks:{
+    session=await ai.live.connect({model:credentials.model,config:{responseModalities:['AUDIO'],inputAudioTranscription:{},outputAudioTranscription:{},speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:credentials.voice}}}},callbacks:{
       onmessage:message=>{
         if(closed)return;
         if(message.toolCall){const functionResponses=message.toolCall.functionCalls.map(call=>{const resolved=resolveLiveTool(call.name,call.args,{question:user,context:conversation,onMedia});conversation=resolved.context;return {id:call.id,name:call.name,response:{result:resolved.result}};});session.sendToolResponse({functionResponses});}
         const content=message.serverContent;if(!content)return;
-        if(content.interrupted){stopAudio();suppressAudio=false;user='';answer='';turnEnded=false;onInterrupt();onText('');onState('listening');}
-        if(content.inputTranscription?.text){suppressAudio=false;user+=content.inputTranscription.text;onUser(user);}
+        if(content.interrupted){stopAudio();suppressAudio=false;user='';answer='';turnEnded=false;resetTurn();onInterrupt();onText('');onState('listening');}
+        if(content.inputTranscription?.text){suppressAudio=false;user+=content.inputTranscription.text;onUser(user);if(responseStarted)presentQuestion();}
+        const parts=content.modelTurn?.parts||[];
+        if(!suppressAudio&&(parts.length||content.outputTranscription?.text)){
+          responseStarted=true;presentQuestion();
+        }
         for(const part of content.modelTurn?.parts||[]){if(suppressAudio||!part.inlineData?.mimeType?.startsWith('audio/'))continue;const raw=atob(part.inlineData.data),array=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)array[i]=raw.charCodeAt(i);const pcm=new Int16Array(array.buffer),buffer=output.createBuffer(1,pcm.length,24000),channel=buffer.getChannelData(0);for(let i=0;i<pcm.length;i++)channel[i]=pcm[i]/32768;const source=output.createBufferSource();source.buffer=buffer;source.connect(gain);cursor=Math.max(cursor,output.currentTime+.02);sources.add(source);source.start(cursor);captions.start(cursor);cursor+=buffer.duration;onState('speaking');source.onended=()=>{sources.delete(source);finish();};}
-        if(content.outputTranscription?.text&&!suppressAudio){answer+=content.outputTranscription.text;captions.append(content.outputTranscription.text);}
+        if(content.outputTranscription?.text&&!suppressAudio){hasOutputTranscript=true;answer+=content.outputTranscription.text;captions.append(content.outputTranscription.text);if(!sources.size)onText(displayOwnerName(answer));}
+        else if(!hasOutputTranscript&&!suppressAudio){
+          const text=parts.filter(part=>!part.thought&&typeof part.text==='string').map(part=>part.text).join('');
+          if(text){answer+=text;captions.append(text);if(!sources.size)onText(displayOwnerName(answer));}
+        }
         if(content.generationComplete&&!sources.size&&!content.outputTranscription?.text)onState('thinking');
         if(content.turnComplete){turnEnded=true;finish();}
       },
@@ -73,7 +90,7 @@ export async function connectLive({messages=[],selectedMediaId=null,context:init
     await startMic();
     if(!messages.length)session.sendClientContent({turns:[{role:'user',parts:[{text:'A visitor has chosen to start the voice tour. Greet them as Will, pronounced as one word and never as individual letters, in one short sentence and ask what they would like to know about Villiam.'}]}],turnComplete:true});
     return {
-      sendText(text){stopAudio();suppressAudio=false;user=text;answer='';turnEnded=false;onUser(text);onText('');onState('thinking');session.sendClientContent({turns:[{role:'user',parts:[{text}]}],turnComplete:true});},
+      sendText(text){stopAudio();resetTurn();suppressAudio=false;user=text;answer='';turnEnded=false;onUser(text);onText('');onState('thinking');session.sendClientContent({turns:[{role:'user',parts:[{text}]}],turnComplete:true});},
       setMedia(id){const media=getMediaContext(id);conversation=mergeAssistantContext(conversation,{mediaId:id});session.sendClientContent({turns:[{role:'user',parts:[{text:'Selected gallery context, not a request to speak: '+JSON.stringify(media||{selected:false})}]}],turnComplete:false});},
       setMic:async enabled=>{if(enabled)await startMic();else{sequence++;stopMic();onState('idle');}},
       setMuted(value){muted=value;if(gain)gain.gain.value=muted?0:1;},

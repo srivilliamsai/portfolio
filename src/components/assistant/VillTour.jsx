@@ -243,6 +243,7 @@ export default function VillTour({onClose}){
                 {message.mediaId&&getMedia(message.mediaId)&&<button className="vill-message-media" type="button" aria-label={`View ${getMedia(message.mediaId).title}`} onClick={()=>{context.current=mergeAssistantContext(context.current,{mediaId:message.mediaId,mediaQueue:message.mediaQueue||null});pick(message.mediaId);setTranscript(false);}}><img src={getMedia(message.mediaId).thumbnail||getMedia(message.mediaId).src} alt=""/>{message.mediaQueue?.filter(id=>id!==message.mediaId&&getMedia(id)?.entityId==='about').map(id=><img key={id} src={getMedia(id).thumbnail||getMedia(id).src} alt=""/>)}<span><small>View image ↗</small></span></button>}
               </div>
             </article>)}
+            {heard&&voiceBackend.current==='live'&&<article className="vill-message is-user"><span className="vill-message-mark" aria-hidden="true">&gt;</span><p>{heard}</p></article>}
             {partial&&(mode==='type'||voiceBackend.current==='live')&&<article className="vill-message is-assistant"><span className="vill-message-mark" aria-hidden="true">●</span><p>{assistantText(partial)}</p></article>}
             {busy&&!partial&&<p className="vill-thinking" role="status">✳ WILL is thinking<span>…</span></p>}
           </div>

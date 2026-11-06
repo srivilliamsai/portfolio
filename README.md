@@ -58,4 +58,4 @@ On 6 November 2026, the `will-assistant` CloudFormation stack completed in Mumba
 
 GitHub CI runs on Linux, macOS and Windows with Node 22. Amplify builds connected pushes and publishes `dist`; it requires the actual public HTTPS `VITE_SITE_URL`. The Production job checks the deployed commit and file hashes after a push to `main`. Keep the assistant API rewrite before the SPA fallback and leave `VITE_ASSISTANT_API_URL` empty for this same-origin setup. Backend/knowledge changes require `npm run assistant:package` and a separate CloudFormation stack update; a frontend push does not update Lambda.
 
-[Architecture](docs/ARCHITECTURE.md) · [Testing](docs/TESTING.md) · [CI](docs/CI.md) · [Deployment](DEPLOYMENT.md) · [Security](SECURITY.md)
+[Builder Center submission draft](docs/SUBMISSION.md) · [Architecture](docs/ARCHITECTURE.md) · [Testing](docs/TESTING.md) · [CI](docs/CI.md) · [Deployment](DEPLOYMENT.md) · [Security](SECURITY.md)
