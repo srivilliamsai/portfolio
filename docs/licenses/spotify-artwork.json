@@ -1,0 +1,32 @@
+[
+  {
+    "trackUrl": "https://open.spotify.com/track/3ZCTVFBt2Brf31RLEnCkWJ",
+    "title": "everything i wanted",
+    "artworkUrl": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f2248cf6dad1d6c062587249",
+    "file": "public/static/media/assistant/song-everything-i-wanted.jpg",
+    "width": 300,
+    "height": 300,
+    "retrieved": "2026-11-06",
+    "source": "Spotify oEmbed; cover artwork remains the property of its rights holders."
+  },
+  {
+    "trackUrl": "https://open.spotify.com/track/3QaPy1KgI7nu9FJEQUgn6h",
+    "title": "WILDFLOWER",
+    "artworkUrl": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0271d62ea7ea8a5be92d3c1f62",
+    "file": "public/static/media/assistant/song-wildflower.jpg",
+    "width": 300,
+    "height": 300,
+    "retrieved": "2026-11-06",
+    "source": "Spotify oEmbed; cover artwork remains the property of its rights holders."
+  },
+  {
+    "trackUrl": "https://open.spotify.com/track/1ZriJmDC61hn2z2eajgooI",
+    "title": "Kanwal",
+    "artworkUrl": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020c50c46d3c16985fc6ea63ad",
+    "file": "public/static/media/assistant/song-kanwal.jpg",
+    "width": 300,
+    "height": 300,
+    "retrieved": "2026-11-06",
+    "source": "Spotify oEmbed; cover artwork remains the property of its rights holders."
+  }
+]

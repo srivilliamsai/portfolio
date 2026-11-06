@@ -1,4 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
+import { createAssistantHandler } from './server/assistant.mjs';
+import { resolveBookingUrl, resolveContactEndpoint } from './src/services/contactDelivery.js';
 import react from '@vitejs/plugin-react';
 import { resolveSiteUrl, createSitemap } from './config/site.mjs';
 import { canonicalPaths } from './src/app/routeCatalog.js';
@@ -11,6 +13,8 @@ import path from 'node:path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_');
+  resolveBookingUrl(env.VITE_BOOKING_URL);
+  resolveContactEndpoint(env.VITE_CONTACT_FORM_URL);
   const siteUrl = resolveSiteUrl(env.VITE_SITE_URL, { requirePublic: Boolean(process.env.AWS_APP_ID) });
 
   for (const post of blogPosts) validateArticleHtml(post.content);
@@ -18,6 +22,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
+      { name: 'vill-local-api', configureServer(server) { server.middlewares.use('/api/assistant', createAssistantHandler()); } },
       {
         name: 'portfolio-site-metadata',
         transformIndexHtml: (html) => html.replaceAll('__SITE_URL__', siteUrl),

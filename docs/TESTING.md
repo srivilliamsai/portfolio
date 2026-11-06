@@ -1,5 +1,36 @@
 # Test results and live website review
 
+## Release verification — 6 November 2026
+
+The release suite passes **265 tests**, including **2,472 distinct WILL questions** and 11 backend deployment tests, on Node.js 22.23.4. Asset, reachable-source, documentation, production-origin, build and distribution checks pass. The dependency audit reported zero known vulnerabilities. Raw JUnit/TAP, per-question answers, unused-file results and review logs remain in ignored `test-results/`; the earlier generated `docs/production-readiness.json` is a local historical report and is excluded from Git.
+
+The local corpus generates natural-language variations across approved case-study sections, technologies, selected certificates, images and biography. It checks topic, grounded detail and allowlisted media. These are deterministic local questions, not 2,472 human conversations or paid-provider evaluations. Reported transcripts add regressions for project aliases, full name, unknown current location/family, names/count formats, photo retention, both portraits, music and non-repeating follow-ups.
+
+Deployment tests regenerate the key-free CloudFormation upload, run its compressed Lambda entrypoint, and check chat streaming before completion, WAV bytes, secret caching/rotation, bounded requests, disconnects and safe Amplify route changes. The bundled Google SDK uses mocked wire responses during tests. Synthetic examples cover both legacy keys and the dotted AQ format; tests never contain real keys.
+
+## Public backend check — 6 November 2026
+
+The owner's CloudFormation screenshot showed `will-assistant` in **CREATE_COMPLETE** in Mumbai. Public requests through the Amplify origin then returned:
+
+| Route | Observed result |
+|---|---|
+| `/api/assistant/status` | HTTP 200 JSON; Gemini chat, voice and TTS enabled |
+| `/api/assistant/chat` | HTTP 200 event stream; three deltas and a final Gemini result, with no stream error |
+| `/api/assistant/tts` | HTTP 200 `audio/wav`; valid RIFF/WAVE header, 126,764 bytes |
+| `/api/assistant/live-session` | HTTP 200; ephemeral token present, `gemini-3.8-live`, `Algieba` |
+
+No permanent key, token value, audio recording or visitor conversation is retained in this record. The pre-release frontend still served the older commit and headers blocking microphone/Spotify. The frontend release must be observed through the exact-commit Production job and actual response headers; backend success alone does not publish local frontend edits. See [the release record](AMPLIFY_RELEASE.md).
+
+## Browser evidence and limits
+
+An earlier same-day compiled baseline checked 26 canonical pages at desktop and mobile widths, with no horizontal overflow, broken loaded images or missing fragment targets. Focused follow-up checks covered scroll restoration, WILL open/close, reported answer routing, the phone introduction, Spotify selection and 560px landscape-preview bounds. These local observations are separate from the historical public results below.
+
+Native caption regressions cover long pauses, pause/resume and cancellation. They verify timing events, not subjective audio quality. Real microphone recognition, acoustic barge-in, browser Live playback, screen-reader behavior, and contact inbox receipt still require their own device/account acceptance checks. No contact message or calendar booking was sent by this release review.
+
+Reviewed unused files and retired cover backups remain local and ignored. Active source, tests, documentation, credits and deployment templates are retained in Git. CI and Amplify run the required checks before publishing; GitHub Production verifies the deployed commit and file hashes after the main-branch push.
+
+## Historical public review
+
 Verified on **3 November 2026** against [the live portfolio](https://main.d229cwpntq8yz1.amplifyapp.com), commit `2af73d7`. This document separates completed checks from checks outside this review. The earlier generic “public review pending” labels have been replaced with the actual results.
 
 ## Automated verification
@@ -65,4 +96,4 @@ An HTTP 200 response establishes reachability at the time checked; it does not c
 
 [verification.json](verification.json) retains earlier dated local checks as history. Its original isolated-copy and documentation-layout records do not replace the current public checks above. The owner-provided [desktop image](screenshots/portfolio-desktop.png), [local mobile menu](screenshots/local-mobile-menu.png), [local terminal story](screenshots/local-terminal-story.png) and [local follow-up](screenshots/local-terminal-followup.png) remain labelled according to their source. The earlier [desktop document preview](screenshots/document-layout-desktop.png) and [mobile document preview](screenshots/document-layout-mobile.png) describe that earlier documentation revision.
 
-This is a focused static-site review, not a comprehensive penetration test, historical secret audit, AWS account/IAM audit, native-app test run or uptime measurement. Challenge eligibility and publication are tracked separately in the [evaluation guide](EVALUATION.md) and [submission draft](SUBMISSION.md).
+This is a focused static-site review, not a comprehensive penetration test, historical secret audit, AWS account/IAM audit, native-app test run or uptime measurement. Challenge eligibility and publication are separate from these technical checks.

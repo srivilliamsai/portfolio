@@ -34,13 +34,15 @@ npm run verify
 npm run preview
 ```
 
-`verify` runs unit tests, the asset check, local documentation links, the Vite build and artifact validation. The preview serves the generated `dist/` locally. When using a temporary `VITE_SITE_URL`, keep the same value for the build and its artifact check. The preview has the same strict default port; `--port 3001` can be used if needed.
+`verify` runs unit tests, 2,472 local WILL questions, the asset and reachable-source checks, local documentation links, the Vite build and artifact validation. The preview serves the generated `dist/` locally. When using a temporary `VITE_SITE_URL`, keep the same value for the build and its artifact check. The preview has the same strict default port; `--port 3001` can be used if needed.
 
 `.env.example` describes the public site-origin variable. If you create a local environment file, keep it out of version control. Public `VITE_*` values become part of browser assets; they are not a place for secrets.
 
+Vite mounts `/api/assistant` for local answers. To use Gemini locally, copy `.env.assistant.example` to the ignored `.env.assistant.local`, set the key privately and choose `ASSISTANT_PROVIDER=gemini`, then restart Vite. `npm run assistant:api` runs the standalone handler on loopback port 3002. Production uses the separate [CloudFormation connection](../deployment/CONNECT_WILL.md); local environment files are never uploaded to Amplify or committed.
+
 ## Folder roles
 
-`src/` is the application; `public/static/` holds required files; `config/` and `vite.config.js` support the build; `scripts/` holds verification and portable test-runner tools; `tests/` contains the automated cases; `docs/` holds this review material. Dependency and build directories are generated locally and ignored by Git.
+`src/` is the application; `public/static/` holds required files; `config/` and `vite.config.js` support the build; `scripts/` holds verification and portable test-runner tools; `tests/` contains the automated cases; `docs/` holds this review material. Dependency/build directories and test reports are generated locally and ignored by Git. Reviewed unused files are preserved in `.local-archive/`, with a manifest, and are excluded from Git and the website build.
 
 ## GitHub checks
 

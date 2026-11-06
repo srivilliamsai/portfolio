@@ -1,3 +1,5 @@
+import { resolveBookingUrl, resolveContactEndpoint } from '../services/contactDelivery.js';
+
 export const portfolio = {
   name: 'Sri Villiam Sai',
   repository: 'https://github.com/srivilliamsai/svs',
@@ -5,12 +7,21 @@ export const portfolio = {
   linkedin: 'https://www.linkedin.com/in/srivilliamsai/',
   credentials: 'https://www.credly.com/users/srivilliamsai',
   email: 'srivilliamsai@gmail.com',
+  contactFormUrl: resolveContactEndpoint(import.meta.env?.VITE_CONTACT_FORM_URL || 'https://formspree.io/f/xnpplzoz'),
+  bookingUrl: resolveBookingUrl(import.meta.env?.VITE_BOOKING_URL || 'https://cal.com/srivilliamsai/30min'),
   reflection: 'I learn by building. Java lets me explore how software works behind the scenes; SwiftUI lets me explore how it feels to use.',
   education: {
     qualification: 'B.Tech. in Information Technology',
     institution: 'SRM Valliammai Engineering College, Chennai',
     period: 'October 2020–April 2024',
     source: '/static/media/resume.pdf',
+  },
+  currentEducation: {
+    qualification: 'M.Tech in Artificial Intelligence',
+    institution: 'SRM Institute of Science and Technology (SRMIST)',
+    period: '2026–2028',
+    status: 'Pursuing',
+    expectedGraduation: '2028',
   },
 };
 
@@ -25,5 +36,4 @@ export const navigation = [
   { label: 'Projects', to: '/#projects' },
   { label: 'Skills', to: '/#skills' },
   { label: 'About me', to: '/#about-me' },
-  { label: 'Blog', to: '/blog' },
 ];

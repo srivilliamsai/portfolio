@@ -8,15 +8,18 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node scripts/run-tests.mjs",
-    "test:terminal": "node scripts/run-tests.mjs --terminal",
     "check:assets": "node scripts/check-assets.mjs",
     "check:dist": "node scripts/check-dist.mjs",
-    "verify": "npm test && npm run check:assets && npm run check:docs && npm run build && npm run check:dist",
+    "verify": "npm test && npm run check:assets && npm run check:unused && npm run check:docs && npm run build && npm run check:dist",
     "test:ci": "node scripts/run-tests.mjs --ci",
     "check:docs": "node scripts/check-docs.mjs",
-    "verify:ci": "npm run test:ci && npm run check:assets && npm run check:docs && npm run build && npm run check:dist"
+    "verify:ci": "npm run test:ci && npm run check:assets && npm run check:unused && npm run check:docs && npm run build && npm run check:dist",
+    "assistant:api": "node server/assistant.mjs",
+    "assistant:package": "node scripts/package-assistant.mjs",
+    "check:unused": "node scripts/check-unused.mjs"
   },
   "dependencies": {
+    "@google/genai": "^2.32.0",
     "framer-motion": "^13.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -80,11 +80,15 @@ export default function Footer() {
         </div>
         <div className="portfolio-footer-bottom">
           <p>© {new Date().getFullYear()} srivilliamsai</p>
-          <nav aria-label="Legal links">
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <Link to="/terms-of-service">Terms of Service</Link>
-            <Link to="/cookies-settings">Cookies Settings</Link>
-          </nav>
+          <div className="portfolio-footer-options">
+            <nav aria-label="Legal links">
+              <Link to="/blog">Blog</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/terms-of-service">Terms of Service</Link>
+              <Link to="/cookies-settings">Cookies Settings</Link>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

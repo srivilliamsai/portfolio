@@ -23,15 +23,17 @@ for (const file of release.files) assert.equal(sha256(await readFile(`dist${file
 async function inspect(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = `${directory}/${entry.name}`;
-    assert.ok(!['archive', 'docs', 'tests', 'scripts', '.github'].includes(entry.name), `Non-site entry must not be published: ${path}`);
+    assert.ok(!['archive', 'docs', 'tests', 'scripts', 'server', '.github'].includes(entry.name), `Non-site entry must not be published: ${path}`);
     if (entry.isDirectory()) { await inspect(path); continue; }
     assert.notEqual(entry.name, '.env', 'Environment files must not be published');
     assert.ok(!entry.name.startsWith('.'), `Hidden metadata must not be published: ${path}`);
     assert.ok(!['archive', 'docs', 'tests', 'scripts'].includes(entry.name), `Non-site directory must not be published: ${path}`);
     if (!/\.(html|js|css|xml|txt|json)$/.test(entry.name)) continue;
     const content = await readFile(path, 'utf8');
-    assert.ok(!/AIza[0-9A-Za-z_-]{30,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(content), `Possible credential in ${path}`);
-    for (const forbidden of ['__SITE_URL__', '/api/gemini', 'generativelanguage.googleapis.com', 'VITE_GEMINI_API_KEY', '/_vercel/insights', '/_vercel/speed-insights', 'https://srivilliamsai.vercel.app']) assert.ok(!content.includes(forbidden), `Retired integration or unresolved configuration in ${path}`);
+    assert.ok(!/AIza[0-9A-Za-z_-]{30,}|AQ\.[0-9A-Za-z_-]{30,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(content), `Possible credential in ${path}`);
+    // VILL intentionally lazy-loads the Gemini browser SDK for ephemeral-token Live sessions.
+    // The retired API route and browser-exposed permanent-key configuration remain forbidden.
+    for (const forbidden of ['__SITE_URL__', '/api/gemini', 'VITE_GEMINI_API_KEY', '/_vercel/insights', '/_vercel/speed-insights', 'https://srivilliamsai.vercel.app']) assert.ok(!content.includes(forbidden), `Retired integration or unresolved configuration in ${path}`);
   }
 }
 await inspect('dist');

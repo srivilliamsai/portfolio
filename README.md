@@ -1,96 +1,61 @@
-# Sri Villiam Sai — Developer Portfolio
+# SRI VILLIAM SAI — Developer Portfolio
 
 [![Portfolio CI](https://github.com/srivilliamsai/portfolio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/srivilliamsai/portfolio/actions/workflows/ci.yml)
 
-My personal developer portfolio, shared for participation in the AWS Student Builder Challenge. It connects Java backend thinking, React interfaces and native iOS work. Visitors can browse projects, skills, open-source contributions and nine articles, or explore the same story through an interactive developer terminal.
+A React/Vite portfolio covering web, native iOS and SaaS development. The homepage features PitStop, Invoice Picker and Glassora; `/projects` presents all six case studies. Visitors can explore skills, experience, five Workday contributions, three certificate documents, 117 credential cards and nine articles, or ask WILL about the work.
 
-The portfolio is a static React/Vite application hosted on AWS Amplify. Its terminal answers portfolio questions using local code and project data; it does not call an AI service.
+The static site is hosted on [AWS Amplify](https://main.d229cwpntq8yz1.amplifyapp.com). Local changes and build reports do not update that deployment. [Deployment instructions](DEPLOYMENT.md) explain the release and exact-commit verification.
 
-![Desktop portfolio homepage supplied by the owner](docs/screenshots/portfolio-desktop.png)
+## Features
 
-*Desktop screenshot supplied by the owner on 3 November 2026. The public site is available on AWS Amplify.*
+- Six case studies with responsive covers, interactive user flows, system walkthroughs and six-part operations diagrams.
+- A monochrome visual system in both appearances, following the device theme. The skills grid retains four columns on phones with compact 80px rows.
+- Browser history restores the previous reading position immediately. Explicit section links scroll to their target; delayed route work is cancelled when the visitor moves on.
+- WILL provides typed chat, a transcript, contextual gallery selection, Gemini speech and Live voice. A separately deployed Lambda backend keeps the permanent key in Secrets Manager; the local responder remains available as a fallback.
+- WILL recognises photo names and follow-ups, advances through requested pictures, explains specific case-study sections and keeps “explain more” on the current topic. Specific project names, documented purposes and reported speech variants take priority over general project lists; names-only and count-only requests return that format without extra cards or commentary.
+- Contact notes use the configured Formspree endpoint; booking links open the owner's calendar.
 
-## Review status
+## Run locally
 
-| Item | Current status |
-|---|---|
-| Application | Implemented; 1,832 tests and production build passed, 3 November 2026 |
-| Public AWS URL | [Live portfolio](https://main.d229cwpntq8yz1.amplifyapp.com) |
-| Source URL | [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio) |
-| AWS evidence | [Live AWS site](https://main.d229cwpntq8yz1.amplifyapp.com); commit and file verification reported through the Production environment |
-| Originality | Previously public portfolio; organizer confirmation required |
-
-A development address is not a public submission URL. Creating a new folder or changing the host does not establish eligibility.
-
-[Evaluation guide](docs/EVALUATION.md) · [Architecture and LLD](docs/ARCHITECTURE.md) · [Testing evidence](docs/TESTING.md) · [Deployment](DEPLOYMENT.md)
-
-## What to explore
-
-- **Projects:** PitStop is the large homepage card; Carbon Footprint and Glassora form the adjacent stack. Wyndra also has its own case study and appears in Skills and the terminal.
-- **Skills:** Backend, Web, iOS, and Cloud & tools link capabilities to project evidence.
-- **About me:** the Java-to-SwiftUI reflection explains the interests behind the work. Experience, credentials and open-source records provide additional context.
-- **Blog:** nine articles include practical walkthroughs and explicitly labelled illustrative writing samples.
-
-## Creative feature: a portfolio you can question
-
-The visible **Terminal** navigation item is the discovery hint. On mobile it is inside the navigation menu. Normal navigation and all core sections remain available without opening it.
-
-1. Open Terminal and enter `story` to read the personal connection between backend logic and native interfaces.
-2. Enter `porjects`: a small spelling mistake is corrected and the project information is returned.
-3. Enter `glassora`, then `its free`: the follow-up uses the last named project and cites the dated India App Store download-price record.
-4. Enter `wyndra`, then `its free`: it explicitly states that pricing is not recorded for that project.
-5. Try `help`, `skills`, `oss` or `shortcuts`. Unsupported or ambiguous questions receive a bounded fallback or clarification instead of invented facts.
-
-The feature reflects how I learn: build a small interaction, make its behavior understandable, and connect it to actual work. The reflection in the site is: “I learn by building. Java lets me explore how software works behind the scenes; SwiftUI lets me explore how it feels to use.”
-
-## Architecture at a glance
-
-![Portfolio build and browser runtime architecture](docs/diagrams/overview.png)
-
-[Open full-size diagram](docs/diagrams/overview.png) · [Editable SVG](docs/diagrams/overview.svg)
-
-The portfolio has no application server or database. Carbon Footprint's Java backend and the iOS projects' services belong to separate applications; they are not this website's infrastructure. [Full component boundaries, request flow, state lifecycle and design choices](docs/ARCHITECTURE.md).
-
-## Run and verify
-
-Use Node.js 22 and npm, from the repository root:
+Use Node.js 22 from `.nvmrc`:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-The terminal prints the development address. Development and production are separate; [local setup](docs/LOCAL_SETUP.md) includes the preview commands and optional alternate port.
+Vite prints the local address. For port 3001:
 
 ```sh
-npm run verify
+npm run dev -- --host 127.0.0.1 --port 3001
 ```
 
-This runs the included unit tests, asset validation, local documentation links, production build and artifact checks. The latest execution and its limits are documented in [TESTING.md](docs/TESTING.md) and [verification.json](docs/verification.json). Passing tests measure the checked behavior; they are not a competition score.
+See [local setup](docs/LOCAL_SETUP.md) for Windows commands and public configuration. No provider key is needed for local answers. Permanent keys belong only in ignored server configuration.
 
-## GitHub workflows
+## Validate a release
 
-[Portfolio CI](.github/workflows/ci.yml) verifies Node 22 on Linux, macOS and Windows, saving JUnit/TAP reports and a build for inspection. [Dependency audit](.github/workflows/dependency-audit.yml) checks locked packages; [Dependabot](.github/dependabot.yml) proposes weekly package/action updates. Amplify builds connected pushes. The Production job reports success only after it verifies the published commit and file hashes. See the [CI guide](docs/CI.md).
+```sh
+npm run verify:ci
+npm audit --audit-level=high
+npm run preview -- --host 127.0.0.1 --port 4174
+```
 
-## AWS implementation
+Verification runs the application tests, **2,472 distinct WILL acceptance questions**, reachable-source and asset audits, documentation checks, production build and distribution validation. The acceptance questions cover case-study sections, technologies, certificates, gallery images and confirmed biography. They are deterministic local-responder checks, not 2,472 human conversations or paid model evaluations.
 
-| Configuration | Purpose |
-|---|---|
-| [Build pipeline](amplify.yml) | Node 22, lockfile install, unit tests, asset validation, Vite build and artifact checks; publishes `dist` |
-| [Response headers](customHttp.yml) | Response-header settings and caching for fingerprinted build assets |
-| [SPA rewrite](deployment/amplify-rewrites.json) | SPA rewrite rules to apply through Amplify's hosting settings |
-| [Site origin](config/site.mjs) | Validates the public deployment origin and creates the sitemap |
-| [Vite build](vite.config.js) | Builds route chunks, substitutes metadata and copies required public files |
+Generated evidence lives in ignored `test-results/`: JUnit/TAP reports, `will-acceptance.json` and `unused-files.json`. The dated [testing record](docs/TESTING.md) separates current local evidence from historical public results.
 
-Set public `VITE_SITE_URL` to the actual Amplify HTTPS origin when deploying. No AWS credential or AI API key is required by the browser application. The AWS service intended for this project is **Amplify Hosting**; no separately provisioned S3, CloudFront, Lambda or database resource is claimed.
+## WILL and voice
 
-## Reviewer and submission documents
+Opening WILL can request microphone permission for its local welcome meter. Choosing Type instead stops that preview; Start talking begins recognition or a configured voice connection. Browser playback prefers the owner-selected Aman Indian English voice and pins it for the session. Caption word boundaries are authoritative when the voice supplies them; voices without boundaries use conservative estimated timing.
 
-- [Evaluation worksheet](docs/EVALUATION.md): qualification gates, evidence mapping and an unofficial 1,000-point review structure using the published weights. No perfect score is claimed.
-- [Architecture](docs/ARCHITECTURE.md): high-level design, component diagram and terminal sequence.
-- [Testing](docs/TESTING.md): reproducible checks, completed evidence and remaining manual scenarios.
-- [Submission draft](docs/SUBMISSION.md): feature explanation, engineering takeaways and the remaining evidence to supply.
+The owner is written as **Villiam**, or **SRI VILLIAM SAI** for the full name, and pronounced William. Naruto fandom and MongoDB.local attendance are owner-confirmed. Event location/date, favourite Naruto character and other unknown personal details are not invented. See [assistant configuration and limitations](docs/VILL.md) and [image credits](docs/licenses/will-gallery-photos.md).
 
-The [official challenge page](https://builder.aws.com/build/hackathons/3bff5627-ef21-3bfc-acfc-fce21d39a4f6/aws-student-builder-challenge-build-your-tech-superpower) remains authoritative for requirements and judging. The repository documents implementation and evidence; it does not establish eligibility or guarantee a ranking.
+On 6 November 2026, the `will-assistant` CloudFormation stack completed in Mumbai. Public checks confirmed Gemini chat deltas, a valid WAV speech response and an ephemeral Live session token through the Amplify API route. These API checks do not establish physical microphone playback or interruption behavior. See the [release record](docs/AMPLIFY_RELEASE.md) and [backend connection guide](deployment/CONNECT_WILL.md).
 
-Security controls and review limits are documented in [SECURITY.md](SECURITY.md).
+## Maintenance and deployment
+
+`npm run check:unused` audits the actual application import graph and public asset references. Reviewed unused files and retired cover backups remain in ignored local archive directories. Generated reports, local environment files, account credentials and private-key exports are ignored; active source, tests, documentation, image credits and key-free deployment templates are versioned.
+
+GitHub CI runs on Linux, macOS and Windows with Node 22. Amplify builds connected pushes and publishes `dist`; it requires the actual public HTTPS `VITE_SITE_URL`. The Production job checks the deployed commit and file hashes after a push to `main`. Keep the assistant API rewrite before the SPA fallback and leave `VITE_ASSISTANT_API_URL` empty for this same-origin setup. Backend/knowledge changes require `npm run assistant:package` and a separate CloudFormation stack update; a frontend push does not update Lambda.
+
+[Architecture](docs/ARCHITECTURE.md) · [Testing](docs/TESTING.md) · [CI](docs/CI.md) · [Deployment](DEPLOYMENT.md) · [Security](SECURITY.md)

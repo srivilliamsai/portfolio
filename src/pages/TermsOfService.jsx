@@ -5,7 +5,7 @@ export default function TermsOfService() {
   return (
     <>
       <SEO
-        title="Terms of Service | My Portfolio"
+        title="Terms of Service | Sri Villiam Sai"
         description="Terms of Service for Sri Villiam Sai's developer portfolio."
         canonical="/terms-of-service"
       />

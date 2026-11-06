@@ -11,3 +11,23 @@ dist/
 test-results/
 coverage/
 *.log
+
+# Server-only assistant configuration template; .env.assistant.local stays ignored.
+!.env.assistant.example
+
+# Owner-requested reversible archive of reviewed unused files.
+.local-archive/
+
+# Local review output and retired artwork backups; keep active docs and deployment templates.
+/archive/retired-project-covers/
+/docs/production-readiness.json
+playwright-report/
+blob-report/
+*.tsbuildinfo
+
+# Account credentials and private key exports.
+.aws/
+*.pem
+*.key
+*.p12
+*.pfx

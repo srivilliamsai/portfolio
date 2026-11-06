@@ -1,0 +1,24 @@
+import {projects} from '../../src/data/projects.js';
+import {projectStories} from '../../src/data/projectStories.js';
+import {certificates} from '../../src/data/certificates.js';
+const prompts=[
+  'What is the {facet} of {project}?','Explain {project}’s {facet}.','How does {project} handle {facet}?','Walk me through {facet} in {project}.',
+  'What happens in {project}’s {facet}?','What should I know about {facet} for {project}?','Describe the {facet} section of {project}.','What does the {project} case study say about {facet}?',
+  'Summarize {facet} for {project}.','Give me details on {project}: {facet}.','Can you explain {facet} in {project}?','Tell me how {facet} works in {project}.',
+  'How is {facet} presented in {project}?','What is documented about {facet} in {project}?','Help me understand {project} and its {facet}.','Discuss {facet} for {project}.',
+  'Show the {facet} explanation for {project}.','What’s the story behind {project}’s {facet}?','What does Villiam describe under {facet} for {project}?','What are the main points of {facet} in {project}?',
+  'What is the purpose of the {facet} section in {project}?','Go into {project}’s {facet}.','Take me through {project} — {facet}.','Which details explain {facet} in {project}?',
+];
+const cases=[];
+for(const project of projects)for(const section of projectStories[project.id].sections)for(const template of prompts){
+  const source=section.body?.[0]||section.flow?.[0]?.title||section.diagram?.layers?.[0]?.nodes?.[0]?.title||section.title;
+  const anchor=source.split(/[.!?]/)[0].trim().split(/\s+/).slice(-5).join(' ');
+  cases.push({category:'case-study sections',question:template.replaceAll('{project}',project.title).replaceAll('{facet}',section.label),topicId:project.id,contains:section.label,anchor});
+}
+for(const project of projects)for(const stem of ['What stack powers','What technology is used in','What languages are used for','What frameworks are used in','What is built with','Tell me the technologies behind','List the stack of','Explain the technology choices for','Which programming languages power','Which tools were used in'])cases.push({category:'project technology',question:`${stem} ${project.title}?`,topicId:project.id,contains:project.technologies[0]});
+for(const certificate of certificates)for(const stem of ['Show','Tell me about','Explain','Describe','Give me details about','What is','Who issued','When was it issued','What does the document say about','Where can I view','Open the certificate for','Show the credential for','Tell me the issuer of','Tell me the issue date of','What information is recorded for','Can you show me','Which issuer awarded','Summarize','Give me the certificate details for','Help me find'])cases.push({category:'selected certificates',question:`${stem} ${certificate.title} certificate?`,topicId:`cert:${certificate.id}`,mediaId:`certificate:${certificate.id}`,contains:certificate.issuer});
+const personal=[['Messi','personal:lionel-messi','interest:messi'],['Dhoni','personal:cricket','interest:cricket'],['F1','personal:formula-one','interest:f1'],['his laptop','personal:developer-workspace','interest:learning-technology'],['MongoDB.local','personal:mongodb-coffee','interest:mongodb-event'],['Naruto','personal:naruto','interest:naruto'],['Michael Jordan','personal:basketball','interest:basketball']];
+for(const [name,mediaId,topicId]of personal)for(const stem of ['Show me','Tell me about','Explain','Describe','What is the story behind','Why does he have a picture of','Why did he add','What does this image represent','How is he connected to','Can I see the image of','Show the photo for','Talk about','What can you tell me about','What do you know about','Bring up the image of','Display','Find the picture of','I want to see','What is the connection with','Why this picture of'])cases.push({category:'personal pictures',question:`${stem} ${name}?`,topicId,mediaId});
+const profiles=[['birthplace','profile:birthplace','Thanjavur'],['school','profile:school','Orathanadu'],['B.Tech','profile:undergraduate','2020–2024'],['M.Tech','profile:postgraduate','2026–2028'],['ZidioConnect','background:zidioconnect','development'],['SREN','background:sren','personal'],['VILL LLM','background:vill-llm','personal'],['learning approach','profile:learning','building'],['career goals','profile:career','software'],['coding practice','profile:practice','Java']];
+for(const [name,topicId,contains]of profiles)for(const stem of ['Tell me about his','Explain his','What can you tell me about his','Give me details on his','Summarize his','What do you know about his','Describe his','I want to learn about his','Help me understand his','Can you explain his'])cases.push({category:'confirmed biography',question:`${stem} ${name}?`,topicId,contains});
+export const assistantAcceptanceCases=cases;

@@ -5,10 +5,10 @@ import { printableReportText } from './lib/report-text.mjs';
 // Pass explicit paths so Windows does not depend on shell wildcard expansion.
 const options = new Set(process.argv.slice(2));
 for (const option of options) {
-  if (!['--ci', '--terminal'].includes(option)) throw new Error(`Unknown option: ${option}`);
+  if (!['--ci'].includes(option)) throw new Error(`Unknown option: ${option}`);
 }
 const files = (await readdir('tests'))
-  .filter((file) => file.endsWith('.test.mjs') && (!options.has('--terminal') || file.startsWith('terminal-')))
+  .filter((file) => file.endsWith('.test.mjs'))
   .sort().map((file) => `tests/${file}`);
 if (!files.length) throw new Error('No test files found');
 const args = ['--test'];

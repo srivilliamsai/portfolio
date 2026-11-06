@@ -1,34 +1,11 @@
 import React from 'react';
-import LinkArrow from '../common/LinkArrow';
 import { Link } from 'react-router-dom';
+import LinkArrow from '../common/LinkArrow';
+import ProjectCard from './ProjectCard';
 import { projects } from '../../data/projects';
 
-const stackedProjects = ['carbon-footprint', 'glassora'].map((id) => projects.find((project) => project.id === id));
-const spotlightProject = projects.find((project) => project.id === 'pitstop');
-
-function ProjectCard({ project, spotlight = false }) {
-  return (
-    <article className={`featured-project${spotlight ? ' featured-project-spotlight' : ''}`}>
-      <Link to={project.link} className="featured-project-link" aria-labelledby={`featured-${project.id}`}>
-        <div className="featured-project-content">
-          <h3 id={`featured-${project.id}`}>{project.title} <LinkArrow /></h3>
-          <p className="text-muted-foreground">{project.description}</p>
-        </div>
-        <picture className="featured-project-cover">
-          {spotlight && <source media="(min-width: 1024px)" srcSet={project.portraitCover} />}
-          <img
-            src={project.landscapeCover}
-            alt={`${project.title} interface preview`}
-            loading="lazy"
-            decoding="async"
-            width={spotlight ? '768' : '1200'}
-            height={spotlight ? '432' : '655'}
-          />
-        </picture>
-      </Link>
-    </article>
-  );
-}
+const spotlightProject = projects.find(project => project.id === 'pitstop');
+const stackedProjects = ['invoice-picker', 'glassora'].map(id => projects.find(project => project.id === id));
 
 export default function FeaturedProjects() {
   return (
@@ -47,8 +24,11 @@ export default function FeaturedProjects() {
         <div className="featured-project-grid">
           <ProjectCard project={spotlightProject} spotlight />
           <div className="featured-project-stack">
-            {stackedProjects.map((project) => <ProjectCard project={project} key={project.id} />)}
+            {stackedProjects.map(project => <ProjectCard project={project} key={project.id} />)}
           </div>
+        </div>
+        <div className="featured-project-actions">
+          <Link className="portfolio-text-link" to="/projects">View all projects <LinkArrow /></Link>
         </div>
       </div>
     </section>

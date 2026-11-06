@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="none">
+  <title>Restaurant turnover prediction — data and model evaluation</title>
+  <rect width="1200" height="600" fill="#101010"/>
+  <path d="M72 470H1128" stroke="#2a2a2a" stroke-width="1.5"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace">
+    <text x="72" y="87" fill="#999" font-size="17" letter-spacing="3">01 / MACHINE LEARNING</text>
+    <text x="72" y="259" fill="#f5f5f5" font-size="56" letter-spacing="-2.5">Better data.</text>
+    <text x="72" y="333" fill="#f5f5f5" font-size="56" letter-spacing="-2.5">Better estimates.</text>
+    <text x="72" y="525" fill="#999" font-size="17" letter-spacing="2">RESTAURANT TURNOVER</text>
+    <text x="1128" y="525" text-anchor="end" fill="#737373" font-size="16">PREPARE / VALIDATE / BLEND</text>
+  </g>
+  <path d="M788 410H1110" stroke="#454545" stroke-width="2"/>
+  <rect x="818" y="306" width="64" height="104" rx="5" fill="#333"/>
+  <rect x="918" y="252" width="64" height="158" rx="5" fill="#737373"/>
+  <rect x="1018" y="177" width="64" height="233" rx="5" fill="#ededed"/>
+  <path d="M1042 118L1055 105L1068 118M1055 105V138" stroke="#ededed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

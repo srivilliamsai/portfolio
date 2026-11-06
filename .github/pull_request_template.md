@@ -5,7 +5,7 @@ Describe the problem and the resulting behavior. Include screenshots for visible
 ## Verification
 
 - [ ] `npm run verify` passes on Node 22.
-- [ ] Relevant terminal, navigation or responsive behavior was checked.
+- [ ] Relevant navigation, assistant or responsive behavior was checked.
 - [ ] Documentation and any dated factual claims match the change.
 - [ ] No credentials, real environment files or generated output are included.
 

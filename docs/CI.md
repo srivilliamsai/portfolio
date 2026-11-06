@@ -6,9 +6,11 @@ Repository: [srivilliamsai/portfolio](https://github.com/srivilliamsai/portfolio
 
 [Portfolio CI](../.github/workflows/ci.yml) runs on pushes, pull requests and manual requests. Each job uses Node.js 22 from `.nvmrc`, installs the lockfile with `npm ci`, and runs `npm run verify:ci` on Linux, macOS and Windows.
 
-The verification includes the terminal and portfolio unit suite, route/asset rewrite regression tests, required-asset checks, local documentation links, a production build and artifact validation. Explicit test-file discovery and normalized asset paths support Windows without relying on shell glob expansion or Unix separators.
+The verification includes the portfolio and assistant unit suite, 2,472 distinct local WILL questions, route/asset rewrite regression tests, reachable-source and required-asset checks, local documentation links, a production build and artifact validation. Explicit test-file discovery and normalized asset paths support Windows without relying on shell glob expansion or Unix separators.
 
-Invalid XML control characters from negative-input tests are stored as visible `\u0000` notation. Each job saves JUnit (`unit.xml`) and TAP (`unit.tap`) reports for 14 days, including when tests fail after producing reports. The successful Linux job retains the compiled build for seven days. Its example origin exists only to exercise the public-URL build guard. **This artifact is for inspection; it is not the final public deployment.**
+Backend deployment tests regenerate the upload template and execute its compressed Lambda entrypoint. They cover SSE streaming, WAV bytes, secret refresh, request limits, disconnects, safe Amplify rule changes and both supported Gemini key formats. The bundled SDK uses mocked provider responses during CI; no real API key, AWS deployment or paid request is needed.
+
+Invalid XML control characters from negative-input tests are stored as visible `\u0000` notation. Each job saves JUnit (`unit.xml`), TAP (`unit.tap`), `will-acceptance.json` and `unused-files.json` reports for 14 days, including when tests fail after producing reports. The successful Linux job retains the compiled build for seven days. Its example origin exists only to exercise the public-URL build guard. **This artifact is for inspection; it is not the final public deployment.**
 
 ## Dependency maintenance
 

@@ -106,7 +106,7 @@ Limits: What still depends on the reader's environment?</code></pre>
     date: 'November 3, 2026',
     publishedAt: '2026-11-03',
     category: 'SwiftUI',
-    image: '/static/media/projectcover/glassora-cover.png',
+    image: '/static/media/projectcover/glassora-cover-v2.webp',
     imageAlt: 'Glassora wallpaper artwork showing a moon above mountains, a lake and dark dunes',
     scope: 'A SwiftUI design walkthrough with an illustrative snippet. Glassora documents the related wallpaper project; this example is not a reproduction of its native source or a measured performance claim.',
     toc: [

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" fill="none">
+  <title>Restaurant turnover modelling workflow</title>
+  <desc>Prepare restaurant features, validate models on matched folds, then blend predictions to estimate annual turnover in INR.</desc>
+  <rect width="1200" height="360" fill="#101010"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace" text-anchor="middle">
+    <text x="200" y="91" fill="#737373" font-size="20" letter-spacing="2">01</text>
+    <text x="600" y="91" fill="#737373" font-size="20" letter-spacing="2">02</text>
+    <text x="1000" y="91" fill="#737373" font-size="20" letter-spacing="2">03</text>
+    <text x="200" y="184" fill="#ededed" font-size="52" letter-spacing="-2">Prepare</text>
+    <text x="600" y="184" fill="#ededed" font-size="52" letter-spacing="-2">Validate</text>
+    <text x="1000" y="184" fill="#ededed" font-size="52" letter-spacing="-2">Blend</text>
+    <text x="600" y="306" fill="#999" font-size="28">Annual turnover estimate · INR</text>
+  </g>
+  <g stroke="#737373" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M362 167H436M426 157L436 167L426 177"/>
+    <path d="M766 167H840M830 157L840 167L830 177"/>
+  </g>
+  <path d="M72 244H1128" stroke="#2a2a2a" stroke-width="1.5"/>
+</svg>

@@ -1,78 +1,63 @@
 # Architecture and low-level design
 
-This describes the inspected portfolio implementation on 3 November 2026. AWS nodes are the intended deployment, not evidence of an already provisioned service.
+Updated for the portfolio release on 6 November 2026. The static frontend and WILL's separately deployed backend have independent release paths.
 
-The diagrams are rendered images, so the document does not require Mermaid support. Open a full-size image to read fine detail; SVG versions remain scalable and editable. The original Mermaid notation is preserved in each SVG file’s metadata.
+## Scope and boundaries
 
-## Scope and system boundary
+The portfolio uses React, React Router, Vite and Framer Motion. Its statically hosted pages present projects, articles, credentials and professional information. The optional WILL backend is separate from the website's static hosting. Carbon Footprint's Java backend and the native apps' content/weather services belong to those projects, not the portfolio.
 
-The product is a read-only personal portfolio with browser-local interactions. It uses React 19, React Router, Vite and Framer Motion. The application contains 42 source files, 18 canonical routes and 51 referenced public assets. Nine of the routes are individual articles.
+```mermaid
+flowchart TD
+  Theme[ThemeProvider: system appearance] --> Sound[SoundProvider]
+  Sound --> Router[BrowserRouter]
+  Router --> Layout[Navigation, page outlet and footer]
+  Layout --> Pages[Home and lazy secondary pages]
+  Layout --> WILL[Lazy WILL assistant]
+  Data[Shared portfolio data] --> Pages
+  Data --> Knowledge[Local assistant knowledge]
+  Knowledge --> WILL
+  WILL --> Proxy[Amplify API rewrite]
+  Proxy --> API[Lambda streaming adapter]
+  Secret[Secrets Manager] --> API
+  API --> Gemini[Gemini chat, TTS and Live tokens]
+  WILL --> Live[Google Live WebSocket with ephemeral token]
+```
 
-The website does not host the projects it describes. Carbon Footprint's Java service, Wyndra's weather provider, and Glassora's Firebase/Cloudflare content services remain outside this portfolio's runtime. Links to those projects, email, social profiles and credentials are outbound destinations.
+## Component responsibilities
 
-![System design, build pipeline and portfolio runtime boundary](diagrams/system-design.png)
-
-[Open full-size diagram](diagrams/system-design.png) · [Editable SVG](diagrams/system-design.svg)
-
-Only Amplify Hosting is intended to be configured for this portfolio. Managed hosting/distribution is not presented as separately created S3 or CloudFront resources. There is no website API, account system, AI endpoint or application database.
-
-## Component structure
-
-![React component boundaries and local terminal modules](diagrams/component-design.png)
-
-[Open full-size diagram](diagrams/component-design.png) · [Editable SVG](diagrams/component-design.svg)
-
-| Boundary | Responsibility and implementation |
+| Boundary | Responsibility |
 |---|---|
-| Routes | Canonical paths, redirects and sitemap inputs — [route catalog](../src/app/routeCatalog.js) |
-| Shared shell | Navigation, page fallback, footer and terminal overlay — [Layout](../src/components/layout/Layout.jsx) |
-| Page registry | Eager Home and lazy secondary pages — [App](../src/App.jsx) |
-| Content | Project summaries, tools, facts, pricing and contribution links — [data records](../src/data) |
-| Terminal UI | Input/output, focus, suggestions and conversation reference — [dialog](../src/components/terminal/DevTerminal.jsx) |
-| Answer logic | Command correction and question/follow-up resolution — [commands](../src/services/terminalCommands.js), [questions](../src/services/terminalQuestions.js) |
-| Input state | Recall index, saved draft and edit/execute transitions — [history reducer](../src/services/terminalHistory.js) |
-| Keyboard | Completion, execution, clear/cancel and recall policy — [key mapping](../src/services/terminalKeyboard.js) |
+| [Route catalog](../src/app/routeCatalog.js) | Canonical paths, redirects and sitemap inputs |
+| [App](../src/App.jsx) | Theme and sound providers, router and page registry |
+| [Layout](../src/components/layout/Layout.jsx) | Navigation, route fallback, footer, opening animation and WILL overlay |
+| [Project data](../src/data/projects.js) | Project summaries, links, scope and responsive cover variants |
+| [Project card](../src/components/portfolio/ProjectCard.jsx) | Shared homepage and collection card; separate tall and landscape art |
+| [Local assistant knowledge](../src/services/assistantKnowledge.js) | Portfolio answers from shared facts and media records |
+| [WILL](../src/components/assistant/VillTour.jsx) | Typed/voice interaction, transcript and image gallery |
+| [Window controls](../src/components/common/WindowControls.jsx) | Generic close, minimize and maximize controls for WILL's transcript |
 
-The homepage feature selection is PitStop, Carbon Footprint and Glassora. Project case studies and terminal answers read the same project records, which limits description drift. Some longer page narratives remain authored separately; they still need content review when a project changes.
+The homepage features PitStop, Invoice Picker and Glassora. View all projects opens `/projects` with all six projects. Case studies and WILL read the same shared project records. The Developer Terminal, its provider, shortcut, commands, history, games and windows have been removed.
 
-## Terminal request sequence
+## Appearance and assets
 
-![Glassora overview and pricing follow-up sequence](diagrams/terminal-sequence.png)
+ThemeProvider follows the operating system's appearance and listens for changes. Project cover art uses the approved grayscale treatment in both modes. PitStop uses a dedicated portrait source in its tall desktop homepage card and a landscape source in mobile, collection and related-project cards. Skill logos, the WILL launcher, Workday logo and call-calendar illustration retain the approved monochrome appearance. The four-column skills grid uses compact 80px rows on phones.
 
-[Open full-size diagram](diagrams/terminal-sequence.png) · [Editable SVG](diagrams/terminal-sequence.svg)
+## Assistant lifecycle
 
-No network service participates in this sequence. Ordinary static files may still load as part of browsing; following an external link is a separate visitor action.
+WILL opens from its header launcher. Opening it makes the surrounding page inert; closing it stops capture/playback and restores focus without scrolling to a visible launcher or menu control. A document scroll lock restores the captured position only if the URL has not changed. The transcript reuses generic window controls independently of any other feature. Typed conversation remains in memory for the page session. Opening WILL requests a local microphone preview when permission is needed; recognition/provider voice begins after Start talking. Type instead and closing stop capture. Provider behavior and configuration are documented in [VILL.md](VILL.md).
 
-### Matching and ambiguity
+## Routes and hosting
 
-`getTerminalReply(input, context)` returns `{ output, context }`. Command resolution runs first; exact aliases and unique nearby spellings select a known command. The spelling matcher handles insertion, omission, substitution and adjacent transposition. Tied matches produce suggestions rather than silently choosing an answer.
+The build resolves the configured site origin, generates `sitemap.xml` and `robots.txt`, and creates entry-page canonical/social metadata. The client SEO component updates page metadata after navigation. This is a client-rendered SPA; crawlers that do not execute JavaScript may not see page-specific content. The supplied Amplify rewrite returns the SPA for application routes while preserving file asset delivery. Unversioned static assets are not declared immutable.
 
-If no command matches, the informational resolver normalizes a bounded vocabulary. Its question path rejects inputs above 400 characters or 65 words and declines command chains/code-like input. This is a small deterministic matcher, not open-ended natural-language understanding. Multiple project/topic matches request clarification. Unknown personal details and unrecorded prices are explicitly left unknown.
+The [Lambda adapter](../server/assistantLambda.mjs) maps Function URL requests to the existing Node handler without starting a local HTTP listener. It preserves streamed chat and binary WAV responses, refreshes the private secret, and stops work on disconnect. The [deployment packager](../scripts/package-assistant.mjs) bundles the handler and approved knowledge into the uploadable CloudFormation template. A scoped custom resource adds the assistant rewrite before existing Amplify rules and removes only its own route during deletion. Frontend pushes and backend stack updates are separate operations; see [the connection guide](../deployment/CONNECT_WILL.md).
 
-### State lifecycle
+## Verification boundaries
 
-| State | Owner and lifecycle |
-|---|---|
-| Dialog | TerminalProvider owns open/closed state and return focus for the page session |
-| Output | DevTerminal retains output and maximize state when closed; reload resets them |
-| Project | conversationRef stores the named project; unrelated, unsupported, ambiguous input or output clearing resets it |
-| Input history | The reducer tracks input, recall index and draft; leaving recall restores the draft, editing creates a new draft |
-| Appearance | ThemeProvider follows the operating system’s color preference and listens for changes |
+`npm run verify` checks the application tests, 2,472 unique local WILL questions, the reachable import graph, active public assets, local documentation links, production build and distribution metadata. Browser checks cover navigation, responsive cover sources, light/dark presentation and WILL transcript controls. Local verification does not certify physical devices, assistive technology, public deployment or unrelated native-app backends. Earlier diagrams and reports dated before this revision are historical records.
 
-The terminal does not persist questions to storage or a remote service. History is not a real operating-system shell and never executes typed commands. Output is rendered as React text with recognized email/URL links; the blog's authored HTML is a separate, source-controlled content path.
+## Navigation and caption timing
 
-## Routes, metadata and assets
+[Scroll restoration](../src/services/scrollRestoration.js) owns a bounded map of history-entry positions and temporarily disables competing native restoration. Departure snapshots are captured before click/pop navigation, so a shorter page cannot overwrite them after DOM commit. POP restores an existing position instantly; an unvisited fragment resolves after its lazy route mounts. New navigation, wheel/touch/pointer input and scroll keys cancel pending fragment work. Explicit links retain smooth scrolling unless reduced motion is requested.
 
-The build resolves `VITE_SITE_URL` and requires a public HTTPS origin under the Amplify build guard. It generates `sitemap.xml`, `robots.txt` and entry-page canonical/social metadata. The shared route catalog provides the sitemap's paths. After navigation, the `SEO` component updates document metadata in the browser.
-
-This is a client-rendered SPA, not a server-rendered or prerendered site. Crawlers that do not execute JavaScript may not see article-specific metadata or content. A generated sitemap does not guarantee indexing. `NotFound` displays a missing-page view and sets client-side noindex; the hosting SPA fallback may still return HTTP 200.
-
-The owner must apply the supplied 200 rewrite in Amplify. Application paths receive the SPA entry; file extensions for scripts, styles, images, fonts, JSON, PDF and XML bypass that fallback. `customHttp.yml` requests response headers and long caching for fingerprinted `/assets/` files. Unversioned `/static/` assets are not declared immutable.
-
-## Design choices, limits and next steps
-
-- Static hosting and local answers keep the portfolio reproducible without an AI account or backend. The tradeoff is a deliberately limited question vocabulary and manually maintained facts.
-- Local shared records keep core summaries consistent; third-party credentials, links and project implementation claims still need periodic owner verification.
-- Native controls, focus handling, a skip link, reduced-motion-aware scrolling and a mobile menu are implemented. Source inspection is not assistive-technology certification.
-- Terminal history grows during a session. A bounded history policy would be a reasonable later improvement for unusually long sessions.
-- No measured latency, availability, cost, security audit, native-app test count or live AWS performance claim is established by this repository's portfolio tests.
+[Project detail answers](../src/services/assistantProjectDetails.js) select the requested case-study section, retain its approved scope and choose matching media. [Caption timing](../src/services/assistantCaptions.js) stops estimated word timers once native boundary events are available, preventing timers from advancing through speech pauses. Aman’s rate and voice remain pinned. Cloud PCM captions still use estimated word timing against the audio clock, not provider-supplied word timestamps.
